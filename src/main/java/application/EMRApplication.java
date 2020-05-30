@@ -12,7 +12,7 @@ public class EMRApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/views/test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/windproto1.fxml"));
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
