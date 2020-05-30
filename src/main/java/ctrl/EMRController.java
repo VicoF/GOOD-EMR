@@ -9,6 +9,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import models.composants.EMRCategories;
 import models.composants.EMRShape;
+import models.composants.InversionAccumulationShape;
 import models.composants.InversionConversionShape;
 import javafx.scene.paint.Color;
 
@@ -39,7 +40,7 @@ public class EMRController {
 
     @FXML
     public void onCanvaClicked(MouseEvent event){
-        shapes.add(new InversionConversionShape(EMRCategories.INVERSION_BASED,event.getX(),event.getY()));
+        shapes.add(new InversionAccumulationShape(EMRCategories.INVERSION_BASED,event.getX(),event.getY()));
         GraphicsContext gc = canva.getGraphicsContext2D();
         for (EMRShape s:shapes) {
 
