@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ctrl.Test"
+            fx:controller="ctrl.EMRController"
             prefHeight="400.0" prefWidth="600.0">
     <top>
         <VBox prefHeight="91.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -129,7 +129,7 @@
     <center>
         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Canvas height="392.0" width="498.0" />
+                <Canvas fx:id="canva" height="392.0" width="498.0" onMouseClicked="#onCanvaClicked" />
                 <ScrollBar prefHeight="14.0" prefWidth="430.0" />
             </children></VBox>
     </center>

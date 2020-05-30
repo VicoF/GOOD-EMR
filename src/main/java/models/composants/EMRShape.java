@@ -1,11 +1,15 @@
 package models.composants;
 
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class EMRShape {
 
     private EMRCategories categorie;
-    private double dimensionA =0.7;
+    private double dimensionA =20;
     private int thicknessB =1;
     private int policeSizeC =10;
     private double posX=0;
@@ -38,7 +42,11 @@ public abstract class EMRShape {
         this.posY = posY;
     }
 
-    public abstract Shape getShape();
+
+
+    public abstract double[] getXCoords();
+
+    public  abstract double[] getYCoords();
 
     public EMRCategories getCategorie() {
         return categorie;
