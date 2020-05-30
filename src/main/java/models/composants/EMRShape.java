@@ -2,26 +2,41 @@ package models.composants;
 
 import javafx.scene.shape.Shape;
 
-import java.awt.*;
-
 public abstract class EMRShape {
 
     private EMRCategories categorie;
     private double dimensionA =0.7;
     private int thicknessB =1;
     private int policeSizeC =10;
+    private double posX=0;
+    private double posY=0;
+
 
     public EMRShape(EMRCategories categorie) {
         this.categorie = categorie;
     }
 
-    public EMRShape(EMRCategories categorie, double dimensionA, int thicknessB, int policeSizeC) {
+    public EMRShape(EMRCategories categorie, double posX, double posY) {
+        this.categorie = categorie;
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    public EMRShape(EMRCategories categorie, double dimensionA, double posX, double posY) {
+        this.categorie = categorie;
+        this.dimensionA = dimensionA;
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    public EMRShape(EMRCategories categorie, double dimensionA, int thicknessB, int policeSizeC, double posX, double posY) {
         this.categorie = categorie;
         this.dimensionA = dimensionA;
         this.thicknessB = thicknessB;
         this.policeSizeC = policeSizeC;
+        this.posX = posX;
+        this.posY = posY;
     }
-
 
     public abstract Shape getShape();
 
@@ -55,5 +70,21 @@ public abstract class EMRShape {
 
     public void setPoliceSizeC(int policeSizeC) {
         this.policeSizeC = policeSizeC;
+    }
+
+    public double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(double posX) {
+        this.posX = posX;
+    }
+
+    public double getPosY() {
+        return posY;
+    }
+
+    public void setPosY(double posY) {
+        this.posY = posY;
     }
 }
