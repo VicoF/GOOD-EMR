@@ -75,42 +75,46 @@ public class EMRController {
         s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING,EMRCategories.INVERSION_BASED,(int) (currentCanva.getWidth()/2),(int) (currentCanva.getHeight()/2));
         s.draw(currentCanva.getGraphicsContext2D());
 
-        inversionCouplingCanva.setOnDragDetected(event->{
-            /* drag was detected, start drag-and-drop gesture*/
-            System.out.println("onDragDetected");
 
-            /* allow any transfer mode */
-            Dragboard db = inversionCouplingCanva.startDragAndDrop(TransferMode.ANY);
-            ClipboardContent content = new ClipboardContent();
-            content.putString("COOL:)");
-            db.setContent(content);
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING,EMRCategories.INVERSION_BASED,0,0);
-
+        canva.setOnDragOver(event -> {
+            /* data is dragged over the target */
+            System.out.println("onDragOver");
+            // On retire la shape que l'on drag de la liste
+            shapes.remove(draggedShape);
+            //On met à jour ses données
+            draggedShape.setPosX(event.getX());
+            draggedShape.setPosY(event.getY());
+            //On la remet dans la liste
+            shapes.add(draggedShape);
+            // On redessine
+           redrawCanva();
 
             event.consume();
         });
 
+        canva.setOnDragDropped(event -> draggedShape=null);
 
-        canva.setOnDragOver(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                System.out.println("onDragOver");
-                // On retire la shape que l'on drag de la liste
-                shapes.remove(draggedShape);
-                //On met à jour ses données
-                draggedShape.setPosX(event.getX());
-                draggedShape.setPosY(event.getY());
-                //On la remet dans la liste
-                shapes.add(draggedShape);
-                // On redessine
-               redrawCanva();
+    }
 
-                event.consume();
-            }
-        });
+    @FXML
+    public void onMenuCanvaDragged(MouseEvent event){
+        /* drag was detected, start drag-and-drop gesture*/
+        System.out.println("onDragDetected");
 
+        /* allow any transfer mode */
+        Dragboard db = inversionCouplingCanva.startDragAndDrop(TransferMode.ANY);
+        ClipboardContent content = new ClipboardContent();
+        content.putString("Allo");
+        db.setContent(content);
+       if(event.getSource().equals(inversionCouplingCanva)) {
+           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
+       }else if (event.getSource().equals(inversionAccumulationCanva)){
+           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
+       }else if (event.getSource().equals(inversionConversionCanva)){
+           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
+       }
 
-
+        event.consume();
     }
 
     @FXML
