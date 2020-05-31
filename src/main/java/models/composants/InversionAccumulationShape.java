@@ -1,6 +1,10 @@
 package models.composants;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
 
 public class InversionAccumulationShape extends EMRShape {
     public InversionAccumulationShape(EMRCategories categorie) {
@@ -31,6 +35,22 @@ public class InversionAccumulationShape extends EMRShape {
         double y = getPosY();
         double a = getDimensionA();
         return new double[]{y, y, y+a,y, y+a,y+a};
+    }
+
+    @Override
+    public Shape getShape(){
+        double[] xCoords = getXCoords();
+        double[] yCoords = getYCoords();
+        ArrayList<Double> coords = new ArrayList<>();
+        for(int i = 0; i < xCoords.length; i++){
+            coords.add(xCoords[i]);
+            coords.add(yCoords[i]);
+        }
+        Polygon shape = new Polygon();
+        shape.getPoints().addAll(coords);
+        shape.setStroke(getCategorie().borderColor);
+        shape.setFill(getCategorie().backgroundColor);
+        return shape;
     }
 
     @Override

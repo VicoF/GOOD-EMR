@@ -1,8 +1,8 @@
 package models.modes;
 
-import models.composants.Composant;
+import models.composants.EMRShape;
 
 public interface Mode {
-    public void composantClicked(Composant composant);
-    public void composantGlisse(Composant composant);
+    public void composantClicked(EMRShape shape);
+    public void composantGlisse(EMRShape shape);
 }
