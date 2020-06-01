@@ -85,15 +85,43 @@ public class EMRController {
         s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING,EMRCategories.INVERSION_BASED,(int) (currentCanva.getWidth()/2),(int) (currentCanva.getHeight()/2));
         s.draw(currentCanva.getGraphicsContext2D());
 
+canva.setOnDragDetected(event -> {
+    System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
+    draggedShape = new SignalArrow(EMRCategories.RED_ARROW,event.getX(),event.getY(),event.getX(),event.getY());
+    canva.startFullDrag();
+});
+
+canva.setOnMouseDragOver(event -> {
+    System.out.println("onDragOver");
+
+    // On retire la shape que l'on drag du canva
+    canva.eraseShape(draggedShape);
+    //On met à jour ses données
+
+        ((Arrow) draggedShape).setTargetPosX(event.getX());
+        ((Arrow) draggedShape).setTargetPosY(event.getY());
+
+    //On la remet dans le canva
+    canva.drawShape(draggedShape);
+
+
+    event.consume();
+});
 
         canva.setOnDragOver(event -> {
             /* data is dragged over the target */
             System.out.println("onDragOver");
+
             // On retire la shape que l'on drag du canva
             canva.eraseShape(draggedShape);
             //On met à jour ses données
-            draggedShape.setPosX(event.getX());
-            draggedShape.setPosY(event.getY());
+            if(event.getGestureSource().equals(canva)){
+                ((Arrow) draggedShape).setTargetPosX(event.getX());
+                ((Arrow) draggedShape).setTargetPosY(event.getY());
+            }else {
+                draggedShape.setPosX(event.getX());
+                draggedShape.setPosY(event.getY());
+            }
             //On la remet dans le canva
             canva.drawShape(draggedShape);
 
@@ -145,7 +173,7 @@ public class EMRController {
 
     @FXML
     public void onCanvaClicked(MouseEvent event) {
-        switch (event.getButton()) {
+      /*  switch (event.getButton()) {
             case PRIMARY:
                 canva.drawShape(new SignalArrow(EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX()-10,event.getY()+20));
                 break;
@@ -156,7 +184,7 @@ public class EMRController {
                 canva.drawShape(new InversionConversionShape(EMRCategories.INVERSION_BASED, event.getX(), event.getY()));
                 break;
         }
-
+*/
     }
 
 

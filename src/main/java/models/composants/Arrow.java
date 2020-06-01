@@ -29,4 +29,20 @@ public abstract class Arrow extends EMRShape {
         this.targetPosX=targetPosX;
         this.targetPosY=targetPosY;
     }
+
+    public double getTargetPosX() {
+        return targetPosX;
+    }
+
+    public void setTargetPosX(double targetPosX) {
+        this.targetPosX = targetPosX;
+    }
+
+    public double getTargetPosY() {
+        return targetPosY;
+    }
+
+    public void setTargetPosY(double targetPosY) {
+        this.targetPosY = targetPosY;
+    }
 }
