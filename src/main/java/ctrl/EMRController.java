@@ -70,6 +70,9 @@ public class EMRController {
     @FXML
     MenuItem menuSave;
 
+    @FXML
+    MenuItem menuOpen;
+
 
     EMRShape draggedShape = null;
 
@@ -191,13 +194,18 @@ public class EMRController {
 */
     }
     public void onMenuFileClick(ActionEvent event){
-        WritableImage wim = new WritableImage(1500, 900);
-        canva.snapshot(null, wim);
-        File file = new File("CanvaImage1.png");
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-        } catch (Exception s) {
+        if (event.getSource().equals(menuSave)) {
+            WritableImage wim = new WritableImage(1500, 900);
+            canva.snapshot(null, wim);
+            File file = new File("CanvaImage1.png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
+            } catch (Exception s) {
+            }
+        } else if (event.getSource().equals(menuOpen)) {
+
         }
+
     }
 
 }
