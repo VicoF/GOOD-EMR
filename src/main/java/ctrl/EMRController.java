@@ -62,52 +62,51 @@ public class EMRController {
     Label modeLabel;
 
 
-
     EMRShape draggedShape = null;
 
     Mode mode = new DrawMode();
 
 
-
-
     public void initialize() {
-       canva.widthProperty().bind(canvaParent.widthProperty());
-       canva.heightProperty().bind(canvaParent.heightProperty());
+        canva.widthProperty().bind(canvaParent.widthProperty());
+        canva.heightProperty().bind(canvaParent.heightProperty());
 
 
         Canvas currentCanva = inversionAccumulationCanva;
-        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION,EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth()/2),(int) (currentCanva.getHeight()/2));
+        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionConversionCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION,EMRCategories.INVERSION_BASED,(int) (currentCanva.getWidth()/2),(int) (currentCanva.getHeight()/2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionCouplingCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING,EMRCategories.INVERSION_BASED,(int) (currentCanva.getWidth()/2),(int) (currentCanva.getHeight()/2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
-canva.setOnDragDetected(event -> {
-    System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
-    draggedShape = new SignalArrow(EMRCategories.RED_ARROW,event.getX(),event.getY(),event.getX(),event.getY());
-    canva.startFullDrag();
-});
+        //Pour dessiner un flêche quand on drag
+        canva.setOnDragDetected(event -> {
+            System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
+            draggedShape = new SignalArrow(EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
+            canva.startFullDrag();
+        });
 
-canva.setOnMouseDragOver(event -> {
-    System.out.println("onDragOver");
+        //Éditer la flêche pendant qu'on drag
+        canva.setOnMouseDragOver(event -> {
+            System.out.println("onDragOver");
 
-    // On retire la shape que l'on drag du canva
-    canva.eraseShape(draggedShape);
-    //On met à jour ses données
+            // On retire la shape que l'on drag du canva
+            canva.eraseShape(draggedShape);
+            //On met à jour ses données
 
-        ((Arrow) draggedShape).setTargetPosX(event.getX());
-        ((Arrow) draggedShape).setTargetPosY(event.getY());
+            ((Arrow) draggedShape).setTargetPosX(event.getX());
+            ((Arrow) draggedShape).setTargetPosY(event.getY());
 
-    //On la remet dans le canva
-    canva.drawShape(draggedShape);
+            //On la remet dans le canva
+            canva.drawShape(draggedShape);
 
 
-    event.consume();
-});
-
+            event.consume();
+        });
+        //Dessiner les formes pendant qu'on drag
         canva.setOnDragOver(event -> {
             /* data is dragged over the target */
             System.out.println("onDragOver");
@@ -115,13 +114,8 @@ canva.setOnMouseDragOver(event -> {
             // On retire la shape que l'on drag du canva
             canva.eraseShape(draggedShape);
             //On met à jour ses données
-            if(event.getGestureSource().equals(canva)){
-                ((Arrow) draggedShape).setTargetPosX(event.getX());
-                ((Arrow) draggedShape).setTargetPosY(event.getY());
-            }else {
-                draggedShape.setPosX(event.getX());
-                draggedShape.setPosY(event.getY());
-            }
+            draggedShape.setPosX(event.getX());
+            draggedShape.setPosY(event.getY());
             //On la remet dans le canva
             canva.drawShape(draggedShape);
 
@@ -129,12 +123,13 @@ canva.setOnMouseDragOver(event -> {
             event.consume();
         });
 
-        canva.setOnDragDropped(event -> draggedShape=null);
+        //Remise à zero de la shape dragged
+        canva.setOnDragDropped(event -> draggedShape = null);
 
     }
 
     @FXML
-    public void onMenuCanvaDragged(MouseEvent event){
+    public void onMenuCanvaDragged(MouseEvent event) {
         /* drag was detected, start drag-and-drop gesture*/
         System.out.println("onDragDetected");
 
@@ -144,28 +139,28 @@ canva.setOnMouseDragOver(event -> {
         content.putString("Allo");
         db.setContent(content);
 
-       if(event.getSource().equals(inversionCouplingCanva)) {
-           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
-       }else if (event.getSource().equals(inversionAccumulationCanva)){
-           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
-       }else if (event.getSource().equals(inversionConversionCanva)){
-           draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
-       }
+        if (event.getSource().equals(inversionCouplingCanva)) {
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
+        } else if (event.getSource().equals(inversionAccumulationCanva)) {
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
+        } else if (event.getSource().equals(inversionConversionCanva)) {
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
+        }
 
         event.consume();
     }
 
 
     @FXML
-    public void onToolBarButtonClicked(ActionEvent event){
+    public void onToolBarButtonClicked(ActionEvent event) {
         modeLabel.setText("Bouton cliqué");
-        if(event.getSource().equals(drawButton)){
+        if (event.getSource().equals(drawButton)) {
             mode = new DrawMode();
             modeLabel.setText("Outil de dessin selectionne, glissez sur le canva pour dessiner une fleche");
-        }else if(event.getSource().equals(eraseButton)){
+        } else if (event.getSource().equals(eraseButton)) {
             mode = new EraseMode();
             modeLabel.setText("Outil efface selectionne, appuyez sur une forme pour l'effacer");
-        }else if(event.getSource().equals(dragButton)){
+        } else if (event.getSource().equals(dragButton)) {
             mode = new DragMode();
             modeLabel.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
         }
@@ -186,7 +181,6 @@ canva.setOnMouseDragOver(event -> {
         }
 */
     }
-
 
 
 }

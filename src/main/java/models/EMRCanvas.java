@@ -36,7 +36,7 @@ public class EMRCanvas extends Canvas {
 
 
     /**
-     * Permet de redessiner le canva à l'aide de la liste de forme du controleur
+     * Permet de redessiner le canva à l'aide de la liste de formes
      */
     private void redrawCanva() {
         GraphicsContext gc = getGraphicsContext2D();

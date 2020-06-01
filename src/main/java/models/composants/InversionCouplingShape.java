@@ -72,7 +72,7 @@ public class InversionCouplingShape extends EMRShape{
     }
 
 
-    public double[] getYCoords(double startY) {
+    private double[] getYCoords(double startY) {
         double a = getDimensionA();
         return new double[]{startY, startY, startY+a, startY+a};
     }
