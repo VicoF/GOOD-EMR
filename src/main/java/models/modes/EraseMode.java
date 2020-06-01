@@ -1,16 +1,16 @@
 package models.modes;
 
 
-import models.composants.Composant;
+import models.composants.EMRShape;
 
 public class EraseMode implements Mode {
     @Override
-    public void composantClicked(Composant composant) {
+    public void composantClicked(EMRShape shape) {
 
     }
 
     @Override
-    public void composantGlisse(Composant composant) {
+    public void composantGlisse(EMRShape shape) {
 
     }
 }

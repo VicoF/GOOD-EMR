@@ -6,7 +6,7 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EMRShape {
+public abstract class EMRShape implements Drawable{
 
     private EMRCategories categorie;
     private double dimensionA =20;
@@ -43,10 +43,7 @@ public abstract class EMRShape {
     }
 
 
-
-    public abstract double[] getXCoords();
-
-    public  abstract double[] getYCoords();
+public abstract Shape getShape();
 
     public EMRCategories getCategorie() {
         return categorie;
