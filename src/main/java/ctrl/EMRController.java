@@ -11,12 +11,7 @@ import javafx.scene.layout.*;
 
 
 import models.EMRCanvas;
-import models.composants.EMRCategories;
-import models.composants.EMRShape;
-import models.composants.EMRShapeFactory;
-import models.composants.InversionAccumulationShape;
-import models.composants.InversionConversionShape;
-import models.composants.InversionCouplingShape;
+import models.composants.*;
 import models.modes.DragMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
@@ -152,7 +147,7 @@ public class EMRController {
     public void onCanvaClicked(MouseEvent event) {
         switch (event.getButton()) {
             case PRIMARY:
-                canva.drawShape(new InversionCouplingShape(EMRCategories.INVERSION_BASED, event.getX(), event.getY()));
+                canva.drawShape(new SignalArrow(EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX()-10,event.getY()+20));
                 break;
             case SECONDARY:
                 canva.drawShape(new InversionAccumulationShape(EMRCategories.INVERSION_BASED, event.getX(), event.getY()));

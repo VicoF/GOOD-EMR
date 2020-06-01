@@ -26,7 +26,7 @@ public class InversionConversionShape extends EMRShape {
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
     }
 
-    @Override
+   /* @Override
     public Shape getShape() {
         double[] xCoords = getXCoords();
         double[] yCoords = getYCoords();
@@ -40,7 +40,7 @@ public class InversionConversionShape extends EMRShape {
         shape.setStroke(getCategorie().borderColor);
         shape.setFill(getCategorie().backgroundColor);
         return shape;
-    }
+    }*/
 
 
     public double[] getXCoords() {

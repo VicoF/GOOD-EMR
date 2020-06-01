@@ -25,7 +25,7 @@ public class InversionCouplingShape extends EMRShape{
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
     }
 
-    @Override
+    /*@Override
     public Shape getShape() {
         double x= getPosX();
         double y = getPosY();
@@ -63,7 +63,7 @@ public class InversionCouplingShape extends EMRShape{
         shapeFinal.setStroke(getCategorie().borderColor);
         shapeFinal.setFill(getCategorie().backgroundColor);
         return shapeFinal;
-    }
+    }*/
 
 
     private double[] getXCoords(double startX) {

@@ -37,7 +37,7 @@ public class InversionAccumulationShape extends EMRShape {
         return new double[]{y, y, y+a,y, y+a,y+a};
     }
 
-    @Override
+   /* @Override
     public Shape getShape(){
         double[] xCoords = getXCoords();
         double[] yCoords = getYCoords();
@@ -51,7 +51,7 @@ public class InversionAccumulationShape extends EMRShape {
         shape.setStroke(getCategorie().borderColor);
         shape.setFill(getCategorie().backgroundColor);
         return shape;
-    }
+    }*/
 
     @Override
     public void draw(GraphicsContext gc) {
