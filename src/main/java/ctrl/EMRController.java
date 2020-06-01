@@ -49,10 +49,8 @@ public class EMRController {
 
     @FXML
     Canvas inversionAccumulationCanva;
-
     @FXML
     Canvas inversionCouplingCanva;
-
     @FXML
     Canvas inversionConversionCanva;
 
@@ -91,13 +89,16 @@ public class EMRController {
 
 
         Canvas currentCanva = inversionAccumulationCanva;
-        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED,
+                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionConversionCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED,
+                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionCouplingCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED,
+                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = conversionCircleCanva;
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));

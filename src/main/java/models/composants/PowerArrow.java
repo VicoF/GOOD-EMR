@@ -2,6 +2,8 @@ package models.composants;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import static java.lang.Math.cos;
+
 public class PowerArrow extends Arrow {
     public PowerArrow(EMRCategories categorie) {
         super(categorie);
@@ -22,6 +24,10 @@ public class PowerArrow extends Arrow {
     @Override
     public void draw(GraphicsContext gc) {
         drawArrow(gc,getPosX(),getPosY(),getTargetPosX(),getTargetPosY());
-        drawArrow(gc,getTargetPosX(),getTargetPosY()+getDimensionA()/2,getPosX(),getPosY()+getDimensionA()/2);
+        double dx = targetPosX-getPosX(), dy = targetPosY-getPosY();
+        double angle = Math.atan2(dx,dy);
+        double xOffset = Math.cos(angle)*getDimensionA()/2;
+        double yOffset = Math.sin(angle)*getDimensionA()/2;
+        drawArrow(gc,getTargetPosX()-xOffset,getTargetPosY()+yOffset,getPosX()-xOffset,getPosY()+yOffset);
     }
 }
