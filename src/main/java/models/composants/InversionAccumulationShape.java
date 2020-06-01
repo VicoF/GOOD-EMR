@@ -1,10 +1,12 @@
 package models.composants;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InversionAccumulationShape extends EMRShape {
     public InversionAccumulationShape(EMRCategories categorie) {
@@ -21,6 +23,21 @@ public class InversionAccumulationShape extends EMRShape {
 
     public InversionAccumulationShape(EMRCategories categorie, double dimensionA, int thicknessB, int policeSizeC, double posX, double posY) {
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
+    }
+
+    @Override
+    public boolean pointIsInsideShape(double coordX, double coordY) {
+        //Transforme le array de double en List de double
+        List<Double> xCoords = Arrays.stream(getXCoords()).boxed().collect(Collectors.toList());
+        List<Double> yCoords = Arrays.stream(getYCoords()).boxed().collect(Collectors.toList());
+
+        double maxX = Collections.max(xCoords);
+        double minX = Collections.min(xCoords);
+
+        double maxY = Collections.max(yCoords);
+        double minY = Collections.min(yCoords);
+
+        return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
     }
 
 

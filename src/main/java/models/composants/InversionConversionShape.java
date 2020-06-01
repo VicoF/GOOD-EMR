@@ -6,6 +6,10 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InversionConversionShape extends EMRShape {
 
@@ -42,6 +46,20 @@ public class InversionConversionShape extends EMRShape {
         return shape;
     }*/
 
+   @Override
+   public boolean pointIsInsideShape(double coordX, double coordY) {
+       //Transforme le array de double en List de double
+       List<Double> xCoords = Arrays.stream(getXCoords()).boxed().collect(Collectors.toList());
+       List<Double> yCoords = Arrays.stream(getYCoords()).boxed().collect(Collectors.toList());
+
+       double maxX = Collections.max(xCoords);
+       double minX = Collections.min(xCoords);
+
+       double maxY = Collections.max(yCoords);
+       double minY = Collections.min(yCoords);
+
+       return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
+   }
 
     private double[] getXCoords() {
         double x = getPosX();

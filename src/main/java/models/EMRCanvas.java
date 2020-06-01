@@ -65,4 +65,14 @@ public class EMRCanvas extends Canvas {
         shapes.remove(shape);
         redrawCanva();
     }
+
+    public EMRShape getShapeOnCoordinate(double coordX, double coordY){
+        for (EMRShape shape:shapes
+             ) {
+            if (shape.pointIsInsideShape(coordX,coordY)){
+                return shape;
+            }
+        }
+        return null; //Si aucune forme trouvée
+    }
 }
