@@ -39,6 +39,8 @@ public class EMRShapeFactory {
        switch(type){
            case SIGNAL_ARROW:
                return new SignalArrow(categorie,sourcePosX,sourcePosY,targetPosX,targetPosY);
+           case POWER_ARROW:
+               return new PowerArrow(categorie,sourcePosX,sourcePosY,targetPosX,targetPosY);
            default:
                throw new UnsupportedOperationException("Ce type de fleche n'est pas pris en charge par la factory");
        }

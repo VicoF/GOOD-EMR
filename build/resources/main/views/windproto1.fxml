@@ -67,7 +67,7 @@
                                         <items>
                                             <FXCollections fx:factory="observableArrayList">
                                                 <String fx:value="Signal arrow" />
-                                                <String fx:value="Power" />
+                                                <String fx:value="Power arrow" />
                                             </FXCollections>
                                         </items>
                                         </ComboBox>
