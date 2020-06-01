@@ -21,7 +21,14 @@ public class AmplificationElementsPlus extends EMRShape{
 
     @Override
     public boolean pointIsInsideShape(double coordX, double coordY) {
-        return false;
+        double maxX = getPosX()+getDimensionA();
+        double minX = getPosX();
+
+        double maxY = getPosY()+getDimensionA();
+        double minY = getPosY();
+
+        return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
+
     }
 
 

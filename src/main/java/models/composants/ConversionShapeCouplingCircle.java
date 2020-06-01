@@ -20,12 +20,18 @@ public class ConversionShapeCouplingCircle extends EMRShape {
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
     }
 
+
+    private double getYCoords2(){
+        double y2 = getPosY() + (2*getDimensionA()/3);
+        return y2;
+    }
+
     @Override
     public boolean pointIsInsideShape(double coordX, double coordY) {
         double maxX = getPosX()+getDimensionA();
         double minX = getPosX();
 
-        double maxY = getPosY()+getDimensionA();
+        double maxY = getYCoords2()+getDimensionA();
         double minY = getPosY();
 
         return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
