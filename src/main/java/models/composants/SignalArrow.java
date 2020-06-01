@@ -8,6 +8,11 @@ public class SignalArrow extends Arrow{
         super(categorie);
     }
 
+    @Override
+    public boolean pointIsInsideShape(double coordX, double coordY) {
+        return false;
+    }
+
     public SignalArrow(EMRCategories categorie, double posX, double posY, double targetPosX, double targetPosY) {
         super(categorie, posX, posY, targetPosX, targetPosY);
     }

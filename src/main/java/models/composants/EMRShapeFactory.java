@@ -47,7 +47,7 @@ public class EMRShapeFactory {
         }
    }
 
-   public static EMRShape getArrow(ArrowType type, EMRCategories categorie, double sourcePosX, double sourcePosY, double targetPosX, double targetPosY){
+   public static Arrow getArrow(ArrowType type, EMRCategories categorie, double sourcePosX, double sourcePosY, double targetPosX, double targetPosY){
        switch(type){
            case SIGNAL_ARROW:
                return new SignalArrow(categorie,sourcePosX,sourcePosY,targetPosX,targetPosY);

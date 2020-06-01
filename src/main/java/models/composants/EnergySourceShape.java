@@ -22,6 +22,11 @@ public class EnergySourceShape extends EMRShape{
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
     }
 
+    @Override
+    public boolean pointIsInsideShape(double coordX, double coordY) {
+        return false;
+    }
+
 
 
     @Override

@@ -69,15 +69,21 @@ public class InversionCouplingShape extends EMRShape{
     }*/
     @Override
     public boolean pointIsInsideShape(double coordX, double coordY) {
+        double x = getPosX();
+        double y = getPosY();
+        double a = getDimensionA();
         //Transforme le array de double en List de double
-        List<Double> xCoords = Arrays.stream(getXCoords(getPosX())).boxed().collect(Collectors.toList());
-        List<Double> yCoords = Arrays.stream(getYCoords(getPosY())).boxed().collect(Collectors.toList());
+        List<Double> xCoords = Arrays.stream(getXCoords(x)).boxed().collect(Collectors.toList());
+        List<Double> yCoords = Arrays.stream(getYCoords(y)).boxed().collect(Collectors.toList());
+        x = (a / 4) + x ;
+        y = y + (2 * a / 3);
+        List<Double> xCoords2 = Arrays.stream(getXCoords(x)).boxed().collect(Collectors.toList());
+        List<Double> yCoords2 = Arrays.stream(getYCoords(y)).boxed().collect(Collectors.toList());
+        double maxX = Math.max(Collections.max(xCoords),Collections.max(xCoords2));
+        double minX = Math.max(Collections.min(xCoords),Collections.min(xCoords2));
 
-        double maxX = Collections.max(xCoords);
-        double minX = Collections.min(xCoords);
-
-        double maxY = Collections.max(yCoords);
-        double minY = Collections.min(yCoords);
+        double maxY = Math.max(Collections.max(yCoords),Collections.max(yCoords2));
+        double minY = Math.max(Collections.min(yCoords),Collections.min(yCoords2));
 
         return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
     }

@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 
 import models.EMRCanvas;
 import models.composants.*;
-import models.modes.DragMode;
+import models.modes.MoveMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
@@ -79,7 +79,7 @@ public class EMRController {
     Button eraseButton;
 
     @FXML
-    Button dragButton;
+    Button moveButton;
 
     @FXML
     Label modeLabel;
@@ -87,8 +87,10 @@ public class EMRController {
 
 
     EMRShape draggedShape = null;
-
-    Mode mode = new DrawMode();
+    DrawMode drawMode = new DrawMode(this);
+    EraseMode eraseMode = new EraseMode(this);
+    MoveMode moveMode = new MoveMode(this);
+    Mode mode = drawMode;
 
 
     public void initialize() {
@@ -218,13 +220,13 @@ public class EMRController {
     public void onToolBarButtonClicked(ActionEvent event) {
         modeLabel.setText("Bouton cliqué");
         if (event.getSource().equals(drawButton)) {
-            mode = new DrawMode();
+            mode = drawMode;
             modeLabel.setText("Outil de dessin selectionne, glissez sur le canva pour dessiner une fleche");
         } else if (event.getSource().equals(eraseButton)) {
-            mode = new EraseMode();
+            mode = eraseMode;
             modeLabel.setText("Outil efface selectionne, appuyez sur une forme pour l'effacer");
-        } else if (event.getSource().equals(dragButton)) {
-            mode = new DragMode();
+        } else if (event.getSource().equals(moveButton)) {
+            mode = moveMode;
             modeLabel.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
         }
     }
@@ -243,6 +245,8 @@ public class EMRController {
                 break;
         }
 */
+
+        mode.canvaClicked(event.getX(),event.getY());
     }
 
 
@@ -266,4 +270,19 @@ public class EMRController {
 
     }
 
+    public Arrow getSelectedArrow(){
+        String value  = (String) arrowCombo.getValue();
+        if (value!=null){
+            if (value.equals("Signal arrow")){
+                return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW,0,0,0,0);
+            }else if (value.equals("Power arrow")){
+                return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW,EMRCategories.BLACK_ARROW,0,0,0,0);
+            }
+        }
+        return null;
+    }
+
+    public EMRCanvas getCanva() {
+        return canva;
+    }
 }

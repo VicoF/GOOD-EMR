@@ -43,7 +43,7 @@
                                         <Button layoutX="65.0" layoutY="6.0" mnemonicParsing="false" onAction="#onToolBarButtonClicked" prefHeight="16.0" prefWidth="26.0" text="+" />
                                         <Label layoutX="138.0" layoutY="10.0" text="Modes :" />
                                         <Button fx:id="drawButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Draw" />
-                                        <Button fx:id="dragButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Drag" />
+                                        <Button fx:id="moveButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Move" />
                                         <Button fx:id="eraseButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Erase" />
                                         <ComboBox fx:id="arrowCombo" layoutX="328.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" promptText="Arrows">
                                         <items>
