@@ -46,5 +46,24 @@ public abstract class Arrow extends EMRShape {
         this.targetPosY = targetPosY;
     }
 
-    public void drawArrow(GraphicsContext gc, )
+    public void drawArrow(GraphicsContext gc, double x1, double y1, double x2, double y2){
+        final int ARROW_SIZE = 6;
+        final double ARROW_ANGLE = Math.PI/6; //30 degrés
+
+        gc.setFill(getCategorie().backgroundColor);
+        gc.setStroke(getCategorie().borderColor);
+
+        double dx = x2 - x1, dy = y2 - y1;
+        double angle = Math.atan2(dy, dx) + Math.PI;
+
+        double x3 = x2 + ARROW_SIZE * Math.cos(angle-ARROW_ANGLE);
+        double y3 = y2 + ARROW_SIZE * Math.sin(angle-ARROW_ANGLE);
+        double x4 = x2 + ARROW_SIZE * Math.cos(angle+ARROW_ANGLE);
+        double y4 = y2 + ARROW_SIZE * Math.sin(angle+ARROW_ANGLE);;
+
+
+        gc.strokeLine(x1, y1, x2, y2);
+        gc.strokeLine(x3,y3,x2,y2);
+        gc.strokeLine(x4,y4,x2,y2);
+    }
 }

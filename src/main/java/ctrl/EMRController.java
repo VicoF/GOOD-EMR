@@ -102,7 +102,8 @@ public class EMRController {
                     draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
                     canva.startFullDrag();
                 }else if (value.equals("Power arrow")){
-                    //TODO
+                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW,EMRCategories.BLACK_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
+                    canva.startFullDrag();
                 }
 
             }
