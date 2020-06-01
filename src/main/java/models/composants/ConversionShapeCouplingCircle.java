@@ -20,6 +20,17 @@ public class ConversionShapeCouplingCircle extends EMRShape {
         super(categorie, dimensionA, thicknessB, policeSizeC, posX, posY);
     }
 
+    @Override
+    public boolean pointIsInsideShape(double coordX, double coordY) {
+        double maxX = getPosX()+getDimensionA();
+        double minX = getPosX();
+
+        double maxY = getPosY()+getDimensionA();
+        double minY = getPosY();
+
+        return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
+    }
+
 
     @Override
     public void draw(GraphicsContext gc) {

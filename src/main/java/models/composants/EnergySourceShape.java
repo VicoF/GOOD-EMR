@@ -23,6 +23,20 @@ public class EnergySourceShape extends EMRShape{
     }
 
 
+
+    @Override
+    public boolean pointIsInsideShape(double coordX, double coordY) {
+
+        double maxX = getPosX()+2*getDimensionA();
+        double minX = getPosX();
+
+        double maxY = getPosY()+getDimensionA();
+        double minY = getPosY();
+
+        return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
+    }
+
+
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(getCategorie().backgroundColor);
