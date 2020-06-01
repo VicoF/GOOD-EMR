@@ -87,6 +87,9 @@
                         <children>
                             <Canvas fx:id="conversionCircleCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
                             <Canvas fx:id="conversionSquareCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                            <Canvas fx:id="conversionCouplingCircleCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                            <Canvas fx:id="conversionCouplingSquareCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                            <Canvas fx:id="energySourceCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
                         </children></FlowPane>
 
                     </content>

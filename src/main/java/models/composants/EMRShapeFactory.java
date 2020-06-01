@@ -6,7 +6,9 @@ package models.composants;
 public class EMRShapeFactory {
 
     public enum ComposantType {
-        INVERSION_ACCUMULATION,INVERSION_CONVERSION,INVERSION_COUPLING, ENERGY_BASED_CONVERSION_SQUARE, ENERGY_BASED_CONVERSION_CIRCLE
+        INVERSION_ACCUMULATION,INVERSION_CONVERSION,INVERSION_COUPLING, ENERGY_BASED_CONVERSION_SQUARE,
+        ENERGY_BASED_CONVERSION_CIRCLE, ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, ENERGY_BASED_CONVERSION_COUPLING_SQUARE,
+        ENERGY_SOURCE_SHAPE
     }
 
     public enum ArrowType{
@@ -34,6 +36,12 @@ public class EMRShapeFactory {
                 return new ConversionShapeSquare(categorie,posX,posY);
             case ENERGY_BASED_CONVERSION_CIRCLE:
                 return new ConversionShapeCircle(categorie,posX,posY);
+            case ENERGY_BASED_CONVERSION_COUPLING_CIRCLE:
+                return new ConversionShapeCouplingCircle(categorie,posX,posY);
+            case ENERGY_BASED_CONVERSION_COUPLING_SQUARE:
+                return new ConversionShapeCouplingSquare(categorie, posX, posY);
+            case ENERGY_SOURCE_SHAPE:
+                return new EnergySourceShape(categorie, posX, posY);
             default:
                 throw new UnsupportedOperationException("Ce type de composant n'est pas pris en charge par la factory");
         }

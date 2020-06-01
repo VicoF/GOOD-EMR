@@ -62,6 +62,14 @@ public class EMRController {
     @FXML
     Canvas conversionCircleCanva;
 
+    @FXML
+    Canvas conversionCouplingCircleCanva;
+
+    @FXML
+    Canvas conversionCouplingSquareCanva;
+
+    @FXML
+    Canvas energySourceCanva;
 
     @FXML
     BorderPane pane;
@@ -104,6 +112,15 @@ public class EMRController {
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = conversionSquareCanva;
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s.draw(currentCanva.getGraphicsContext2D());
+        currentCanva = conversionCouplingSquareCanva;
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s.draw(currentCanva.getGraphicsContext2D());
+        currentCanva = conversionCouplingCircleCanva;
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s.draw(currentCanva.getGraphicsContext2D());
+        currentCanva = energySourceCanva;
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
         //Pour dessiner un flêche quand on drag
@@ -183,6 +200,12 @@ public class EMRController {
             draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, 0, 0);
         }else if (event.getSource().equals(conversionCircleCanva)){
             draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, 0, 0);
+        }else if (event.getSource().equals(conversionCouplingSquareCanva)){
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE, EMRCategories.ENERGY_BASED, 0, 0);
+        }else if (event.getSource().equals(conversionCouplingCircleCanva)){
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, EMRCategories.ENERGY_BASED, 0, 0);
+        }else if (event.getSource().equals(energySourceCanva)){
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, 0, 0);
         }
 
 
