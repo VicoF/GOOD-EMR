@@ -57,6 +57,13 @@ public class EMRController {
     Canvas inversionConversionCanva;
 
     @FXML
+    Canvas conversionSquareCanva;
+
+    @FXML
+    Canvas conversionCircleCanva;
+
+
+    @FXML
     BorderPane pane;
 
     @FXML
@@ -71,9 +78,6 @@ public class EMRController {
     @FXML
     Label modeLabel;
 
-
-    @FXML
-    MenuItem menuOpen;
 
 
     EMRShape draggedShape = null;
@@ -94,6 +98,12 @@ public class EMRController {
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionCouplingCanva;
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s.draw(currentCanva.getGraphicsContext2D());
+        currentCanva = conversionCircleCanva;
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s.draw(currentCanva.getGraphicsContext2D());
+        currentCanva = conversionSquareCanva;
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
         //Pour dessiner un flêche quand on drag
@@ -169,7 +179,12 @@ public class EMRController {
             draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
         } else if (event.getSource().equals(inversionConversionCanva)) {
             draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
+        }else if (event.getSource().equals(conversionSquareCanva)){
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, 0, 0);
+        }else if (event.getSource().equals(conversionCircleCanva)){
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, 0, 0);
         }
+
 
         event.consume();
     }
@@ -205,19 +220,9 @@ public class EMRController {
         }
 */
     }
-<<<<<<< HEAD
-    public void onMenuFileClick(ActionEvent event){
-        if (event.getSource().equals(menuSave)) {
-            WritableImage wim = new WritableImage(1500, 900);
-            canva.snapshot(null, wim);
-            File file = new File("CanvaImage1.png");
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-            } catch (Exception s) {
-            }
-        } else if (event.getSource().equals(menuOpen)) {
 
-=======
+
+
     public void onMenuButtonClick(ActionEvent event){
         Object source = event.getSource();
 
@@ -232,7 +237,7 @@ public class EMRController {
             modeLabel.setText("Sauvegarder le canva courant");
         }else{
             modeLabel.setText("Option non pris en charge");
->>>>>>> master
+
         }
 
     }

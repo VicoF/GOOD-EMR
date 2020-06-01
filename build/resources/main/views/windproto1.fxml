@@ -6,11 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import models.*?>
 
-<<<<<<< HEAD
-=======
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
->>>>>>> master
 <BorderPane focusTraversable="true" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.EMRController">
     <top>
         <VBox prefHeight="91.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -19,24 +16,14 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-<<<<<<< HEAD
-                        <MenuItem mnemonicParsing="false" text="Save" fx:id="menuSave" onAction="#onMenuFileClick"/>
-                        <MenuItem mnemonicParsing="false" text="Open" fx:id="menuopen"/>
-                                <MenuItem mnemonicParsing="false" text="Close" fx:id="menuClose"/>
-=======
                         <MenuItem mnemonicParsing="false" text="Save" fx:id="menuSave" onAction="#onMenuButtonClick"/>
                         <MenuItem mnemonicParsing="false" text="Open" fx:id="menuOpen" onAction="#onMenuButtonClick"/>
                                 <MenuItem mnemonicParsing="false" text="Close" fx:id="menuClose" onAction="#onMenuButtonClick"/>
->>>>>>> master
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-<<<<<<< HEAD
-                                <MenuItem mnemonicParsing="false" text="Clear All" fx:id="menuClaerAll"/>
-=======
                                 <MenuItem mnemonicParsing="false" text="Clear All" fx:id="menuClearAll" onAction="#onMenuButtonClick"/>
->>>>>>> master
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="More...">
@@ -58,11 +45,6 @@
                                         <Button fx:id="drawButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Draw" />
                                         <Button fx:id="dragButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Drag" />
                                         <Button fx:id="eraseButton" mnemonicParsing="false" onAction="#onToolBarButtonClicked" text="Erase" />
-<<<<<<< HEAD
-                                        <Button layoutX="256.0" layoutY="6.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="30.0" text="Button" />
-                                        <Button layoutX="292.0" layoutY="6.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="28.0" text="Button" />
-                                        <ComboBox layoutX="328.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" promptText="Arrows" />
-=======
                                         <ComboBox fx:id="arrowCombo" layoutX="328.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" promptText="Arrows">
                                         <items>
                                             <FXCollections fx:factory="observableArrayList">
@@ -71,7 +53,6 @@
                                             </FXCollections>
                                         </items>
                                         </ComboBox>
->>>>>>> master
                                         <Button layoutX="413.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="Button" />
                                         <Label layoutX="460.0" layoutY="10.0" text="Aligment :" />
                                         <Button layoutX="523.0" layoutY="6.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="29.0" text="Button" />
@@ -102,7 +83,12 @@
             <panes>
                 <TitledPane animated="false" text="Energy-based models">
                     <content>
-                  <FlowPane fx:id="energyBasedPane" />
+                  <FlowPane fx:id="energyBasedPane" >
+                        <children>
+                            <Canvas fx:id="conversionCircleCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                            <Canvas fx:id="conversionSquareCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                        </children></FlowPane>
+
                     </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Inversion-based models">

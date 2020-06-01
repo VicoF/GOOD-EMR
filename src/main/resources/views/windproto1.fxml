@@ -83,7 +83,12 @@
             <panes>
                 <TitledPane animated="false" text="Energy-based models">
                     <content>
-                  <FlowPane fx:id="energyBasedPane" />
+                  <FlowPane fx:id="energyBasedPane" >
+                        <children>
+                            <Canvas fx:id="conversionCircleCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                            <Canvas fx:id="conversionSquareCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
+                        </children></FlowPane>
+
                     </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Inversion-based models">
