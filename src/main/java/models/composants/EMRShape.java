@@ -43,7 +43,7 @@ public abstract class EMRShape implements Drawable{
     }
 
 
-
+    public abstract boolean pointIsInsideShape(double coordX, double coordY);
 
     public EMRCategories getCategorie() {
         return categorie;
