@@ -43,7 +43,7 @@ public abstract class EMRShape implements Drawable{
     }
 
 
-public abstract Shape getShape();
+
 
     public EMRCategories getCategorie() {
         return categorie;
