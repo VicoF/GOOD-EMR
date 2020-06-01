@@ -43,14 +43,14 @@ public class InversionConversionShape extends EMRShape {
     }*/
 
 
-    public double[] getXCoords() {
+    private double[] getXCoords() {
         double x = getPosX();
         double a = getDimensionA();
         return new double[]{x, x +(3*a/4), x + ( a / 2), x - a/4};
     }
 
 
-    public double[] getYCoords() {
+    private double[] getYCoords() {
         double y = getPosY();
         double a = getDimensionA();
         return new double[]{y, y, y+a, y+a};
