@@ -45,4 +45,6 @@ public abstract class Arrow extends EMRShape {
     public void setTargetPosY(double targetPosY) {
         this.targetPosY = targetPosY;
     }
+
+    public void drawArrow(GraphicsContext gc, )
 }

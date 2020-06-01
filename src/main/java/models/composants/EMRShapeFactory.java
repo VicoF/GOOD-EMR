@@ -1,14 +1,16 @@
 package models.composants;
 
-import java.awt.*;
-
 /**
  * Factory permetant de générer des composants
  */
 public class EMRShapeFactory {
 
-    public enum EMRShapeType {
+    public enum ComposantType {
         INVERSION_ACCUMULATION,INVERSION_CONVERSION,INVERSION_COUPLING
+    }
+
+    public enum ArrowType{
+        SIGNAL_ARROW,POWER_ARROW
     }
 
 
@@ -20,7 +22,7 @@ public class EMRShapeFactory {
      * @param posY Position en Y du coin supérieur gauche du composant
      * @return La EMRShape générée
      */
-   public static EMRShape getComposant(EMRShapeType type, EMRCategories categorie, double posX, double posY){
+   public static EMRShape getComposant(ComposantType type, EMRCategories categorie, double posX, double posY){
         switch (type){
             case INVERSION_ACCUMULATION:
                 return new InversionAccumulationShape(categorie,posX, posY);
@@ -31,6 +33,15 @@ public class EMRShapeFactory {
             default:
                 throw new UnsupportedOperationException("Ce type de composant n'est pas pris en charge par la factory");
         }
+   }
+
+   public static EMRShape getArrow(ArrowType type, EMRCategories categorie, double sourcePosX, double sourcePosY, double targetPosX, double targetPosY){
+       switch(type){
+           case SIGNAL_ARROW:
+               return new SignalArrow(categorie,sourcePosX,sourcePosY,targetPosX,targetPosY);
+           default:
+               throw new UnsupportedOperationException("Ce type de fleche n'est pas pris en charge par la factory");
+       }
    }
 
 
