@@ -1,14 +1,9 @@
 package ctrl;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.WritableImage;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
@@ -20,9 +15,6 @@ import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-
 
 public class EMRController {
 
@@ -33,6 +25,18 @@ public class EMRController {
 
     @FXML
     Accordion accordion;
+
+    @FXML
+    MenuItem menuSave;
+    @FXML
+    MenuItem menuOpen;
+    @FXML
+    MenuItem menuClose;
+    @FXML
+    MenuItem menuClearAll;
+
+    @FXML
+    ComboBox arrowCombo;
 
     @FXML
     FlowPane energyBasedPane;
@@ -67,8 +71,6 @@ public class EMRController {
     @FXML
     Label modeLabel;
 
-    @FXML
-    MenuItem menuSave;
 
 
     EMRShape draggedShape = null;
@@ -82,20 +84,29 @@ public class EMRController {
 
 
         Canvas currentCanva = inversionAccumulationCanva;
-        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionConversionCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
         currentCanva = inversionCouplingCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
         //Pour dessiner un flêche quand on drag
         canva.setOnDragDetected(event -> {
             System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
-            draggedShape = new SignalArrow(EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
-            canva.startFullDrag();
+            String value  = (String) arrowCombo.getValue();
+            if (value!=null){
+                if (value.equals("Signal arrow")){
+                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
+                    canva.startFullDrag();
+                }else if (value.equals("Power arrow")){
+                    //TODO
+                }
+
+            }
+
         });
 
         //Éditer la flêche pendant qu'on drag
@@ -149,11 +160,11 @@ public class EMRController {
         db.setContent(content);
 
         if (event.getSource().equals(inversionCouplingCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
         } else if (event.getSource().equals(inversionAccumulationCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
         } else if (event.getSource().equals(inversionConversionCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.EMRShapeType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
+            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
         }
 
         event.consume();
@@ -190,14 +201,22 @@ public class EMRController {
         }
 */
     }
-    public void onMenuFileClick(ActionEvent event){
-        WritableImage wim = new WritableImage(1500, 900);
-        canva.snapshot(null, wim);
-        File file = new File("CanvaImage1.png");
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-        } catch (Exception s) {
+    public void onMenuButtonClick(ActionEvent event){
+        Object source = event.getSource();
+
+        if (source.equals(menuClearAll)){
+                modeLabel.setText("Clear");
+                canva.clear();
+        }else if (source.equals(menuClose)){
+            modeLabel.setText("Fermer la fenêtre");
+        }else if(source.equals(menuOpen)){
+            modeLabel.setText("Ouvrir un fichier sauvegardé");
+        }else if(source.equals(menuSave)){
+            modeLabel.setText("Sauvegarder le canva courant");
+        }else{
+            modeLabel.setText("Option non pris en charge");
         }
+
     }
 
 }
