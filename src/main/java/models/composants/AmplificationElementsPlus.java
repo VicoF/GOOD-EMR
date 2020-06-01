@@ -28,7 +28,9 @@ public class AmplificationElementsPlus extends EMRShape{
         double yCoords = getPosY();
         double dimA = getDimensionA();
         gc.fillRect(xCoords,yCoords, dimA,dimA);
+
         gc.strokeRect(xCoords,yCoords,dimA,dimA);
+
     }
 
 
