@@ -10,7 +10,13 @@ public class SignalArrow extends Arrow{
 
     @Override
     public boolean pointIsInsideShape(double coordX, double coordY) {
-        return false;
+        double maxX = Math.max(getPosX(),targetPosX);
+        double minX = Math.min(getPosX(),targetPosX);
+
+        double maxY = Math.max(getPosY(),targetPosY);
+        double minY = Math.min(getPosY(),targetPosY);
+
+        return(coordX>=minX&&coordX<=maxX&&coordY>=minY&&coordY<=maxY);
     }
 
     public SignalArrow(EMRCategories categorie, double posX, double posY, double targetPosX, double targetPosY) {
