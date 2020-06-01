@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import models.EMRCanvas?>
 <BorderPane focusTraversable="true" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.EMRController">
     <top>
         <VBox prefHeight="91.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -31,14 +33,14 @@
                     <tabs>
                         <Tab text="Editor">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="600.0">
+                                <HBox minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="600.0" spacing="15.0" focusTraversable="true">
                                     <children>
-                                        <Button layoutX="65.0" layoutY="6.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="26.0" text="+" />
                                         <Label layoutX="14.0" layoutY="10.0" text="Option :" />
+                                        <Button layoutX="65.0" layoutY="6.0" mnemonicParsing="false" onAction="#onToolBarButtonClicked" prefHeight="16.0" prefWidth="26.0" text="+" />
                                         <Label layoutX="138.0" layoutY="10.0" text="Modes :" />
-                                        <Button layoutX="99.0" layoutY="6.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="26.0" text="Button" />
-                                        <Button layoutX="189.0" layoutY="6.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="29.0" text="Button" />
-                                        <Button layoutX="223.0" layoutY="6.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="27.0" text="Button" />
+                                        <Button fx:id="drawButton" onAction="#onToolBarButtonClicked"  mnemonicParsing="false" text="Draw" />
+                                        <Button fx:id="dragButton" onAction="#onToolBarButtonClicked"  mnemonicParsing="false" text="Drag" />
+                                        <Button fx:id="eraseButton" onAction="#onToolBarButtonClicked"  mnemonicParsing="false" text="Erase" />
                                         <Button layoutX="256.0" layoutY="6.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="30.0" text="Button" />
                                         <Button layoutX="292.0" layoutY="6.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="28.0" text="Button" />
                                         <ComboBox layoutX="328.0" layoutY="6.0" prefHeight="25.0" prefWidth="79.0" promptText="Arrows" />
@@ -49,7 +51,10 @@
                                         <Label layoutX="601.0" layoutY="6.0" />
                                         <Label layoutX="601.0" layoutY="10.0" text="Inversion :" />
                                         <Button layoutX="668.0" layoutY="6.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" text="Button" />
-                                    </children></AnchorPane>
+                                    </children>
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                           </padding></HBox>
                             </content>
                         </Tab>
                         <Tab text="Simulator">
@@ -67,12 +72,12 @@
     <left>
         <Accordion fx:id="accordion" BorderPane.alignment="CENTER">
             <panes>
-                <TitledPane animated="false" onMouseClicked="#onTitledPaneClicked" text="Energy-based models">
+                <TitledPane animated="false" text="Energy-based models">
                     <content>
                   <FlowPane fx:id="energyBasedPane" />
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#onTitledPaneClicked" text="Inversion-based models">
+                <TitledPane animated="false" text="Inversion-based models">
                     <content>
                         <FlowPane fx:id="inversionBasedPane" focusTraversable="true">
                      <children>
@@ -82,12 +87,12 @@
                      </children></FlowPane>
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#onTitledPaneClicked" text="Strategy models">
+                <TitledPane animated="false" text="Strategy models">
                     <content>
                         <FlowPane fx:id="strategyBasedPane" />
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#onTitledPaneClicked" text="Estimator models">
+                <TitledPane animated="false" text="Estimator models">
                     <content>
                         <FlowPane fx:id="estimatorBasedPane" />
                     </content>
@@ -96,16 +101,15 @@
         </Accordion>
     </left>
     <bottom>
-        <Label prefHeight="1.0" prefWidth="734.0" text="Label" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+        <Label fx:id="modeLabel" text="Label" textAlignment="CENTER" BorderPane.alignment="CENTER" />
     </bottom>
     <right>
-        <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
+
     </right>
     <center>
-        <VBox alignment="BOTTOM_LEFT" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="canvaParent" alignment="BOTTOM_LEFT" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Canvas fx:id="canva" height="392.0" onMouseClicked="#onCanvaClicked" width="498.0" />
-                <ScrollBar prefHeight="14.0" prefWidth="430.0" />
+                         <EMRCanvas fx:id="canva" onMouseClicked="#onCanvaClicked"/>
             </children></VBox>
     </center>
 
