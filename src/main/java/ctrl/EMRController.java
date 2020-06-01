@@ -1,11 +1,14 @@
 package ctrl;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
@@ -16,6 +19,9 @@ import models.modes.DragMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
+
+import javax.imageio.ImageIO;
+import java.io.File;
 
 
 public class EMRController {
@@ -60,6 +66,9 @@ public class EMRController {
 
     @FXML
     Label modeLabel;
+
+    @FXML
+    MenuItem menuSave;
 
 
     EMRShape draggedShape = null;
@@ -181,6 +190,14 @@ public class EMRController {
         }
 */
     }
-
+    public void onMenuFileClick(ActionEvent event){
+        WritableImage wim = new WritableImage(1500, 900);
+        canva.snapshot(null, wim);
+        File file = new File("CanvaImage1.png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
+        } catch (Exception s) {
+        }
+    }
 
 }
