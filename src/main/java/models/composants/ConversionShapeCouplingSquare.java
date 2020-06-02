@@ -57,4 +57,9 @@ public class ConversionShapeCouplingSquare extends EMRShape {
         gc.strokeRect(xCoords2,yCoords2,dimA,dimA);
 
     }
+
+    @Override
+    public EMRShape clone() {
+        return new ConversionShapeCouplingSquare(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

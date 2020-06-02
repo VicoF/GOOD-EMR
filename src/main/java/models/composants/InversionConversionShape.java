@@ -84,4 +84,8 @@ public class InversionConversionShape extends EMRShape {
         gc.strokePolygon(xCoords,yCoords,xCoords.length);
 
     }
+    @Override
+    public EMRShape clone() {
+        return new InversionConversionShape(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

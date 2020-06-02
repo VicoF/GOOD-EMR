@@ -108,8 +108,6 @@ public class EMRController {
     Mode mode = drawMode;
     Stack<Command> undoCommands = new Stack<>();
     Stack<Command> redoCommands = new Stack<>();
-    Stack<EMRShape> undoShape = new Stack<>();
-    Stack<String> wtd = new Stack<>();
 
 
     public void initialize() {
@@ -145,40 +143,7 @@ public class EMRController {
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
-        //Pour dessiner un flêche quand on drag
-        canva.setOnDragDetected(event -> {
-            System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
-            String value  = (String) arrowCombo.getValue();
-            if (value!=null){
-                if (value.equals("Signal arrow")){
-                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
-                    canva.startFullDrag();
-                }else if (value.equals("Power arrow")){
-                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW,EMRCategories.BLACK_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
-                    canva.startFullDrag();
-                }
 
-            }
-
-        });
-
-        //Éditer la flêche pendant qu'on drag
-        canva.setOnMouseDragOver(event -> {
-            System.out.println("onDragOver");
-
-            // On retire la shape que l'on drag du canva
-            canva.eraseShape(draggedShape);
-            //On met à jour ses données
-
-            ((Arrow) draggedShape).setTargetPosX(event.getX());
-            ((Arrow) draggedShape).setTargetPosY(event.getY());
-
-            //On la remet dans le canva
-            canva.drawShape(draggedShape);
-
-
-            event.consume();
-        });
         //Dessiner les formes pendant qu'on drag
         canva.setOnDragOver(event -> {
             /* data is dragged over the target */
@@ -191,15 +156,21 @@ public class EMRController {
             draggedShape.setPosY(event.getY());
             //On la remet dans le canva
             canva.drawShape(draggedShape);
-
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 
             event.consume();
         });
 
         //Remise à zero de la shape dragged
         canva.setOnDragDropped(event -> {//Command cmd = new DrawEMRShapeCommand(canva,draggedShape);
-            wtd.add("Drag");
-            draggedShape = null;});
+            System.out.println("Package launched");
+            canva.eraseShape(draggedShape);
+            Command cmd = new DrawEMRShapeCommand(draggedShape.clone());
+            cmd.execute(canva);
+            undoCommands.add(cmd);
+            draggedShape = null;
+            event.setDropCompleted(true);
+        });
 
     }
 
@@ -252,14 +223,20 @@ public class EMRController {
             mode = moveMode;
             modeLabel.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
         }else if (event.getSource().equals(undoButton)) {
-
-            redoCommands.add(undoCommands.peek());
-            undoCommands.pop().undo();
+            if(!undoCommands.empty()){
+            Command cmd = undoCommands.pop();
+                redoCommands.add(cmd);
+                cmd.undo(canva);
+            }
             modeLabel.setText("undoMode");
 
         }
         else if (event.getSource().equals(redoButton)) {
-            redoCommands.pop().execute();
+            if(!redoCommands.empty()){
+                Command cmd = redoCommands.pop();
+                undoCommands.add(cmd);
+                cmd.execute(canva);
+            }
             modeLabel.setText("redoMode");
         }
     }
@@ -322,7 +299,5 @@ public class EMRController {
 
     public Stack<Command> getRedoCommands(){return redoCommands;}
 
-    public Stack<EMRShape> getUndoShape(){return undoShape;}
 
-    public Stack<String> getWtd() {return wtd;}
 }

@@ -46,5 +46,8 @@ public class ConversionShapeCircle extends EMRShape {
         gc.strokeOval(xCoords,yCoords,dimA,dimA);
 
     }
-
+    @Override
+    public EMRShape clone() {
+        return new ConversionShapeCircle(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

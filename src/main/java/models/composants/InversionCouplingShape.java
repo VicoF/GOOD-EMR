@@ -123,4 +123,8 @@ public class InversionCouplingShape extends EMRShape{
         gc.strokePolygon(xCoords2,yCoords2,xCoords2.length);
 
     }
+    @Override
+    public EMRShape clone() {
+        return new InversionCouplingShape(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

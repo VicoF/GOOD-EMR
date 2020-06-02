@@ -48,4 +48,8 @@ public class PowerArrow extends Arrow {
         double yOffset = Math.sin(angle)*getDimensionA()/2;
         drawArrow(gc,getTargetPosX()-xOffset,getTargetPosY()+yOffset,getPosX()-xOffset,getPosY()+yOffset);
     }
+    @Override
+    public EMRShape clone() {
+        return new PowerArrow(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY(),targetPosX,targetPosY);
+    }
 }

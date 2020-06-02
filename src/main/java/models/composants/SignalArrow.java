@@ -35,4 +35,9 @@ public class SignalArrow extends Arrow{
     public void draw(GraphicsContext gc) {
         drawArrow(gc,getPosX(),getPosY(),getTargetPosX(),getTargetPosY());
     }
+
+    @Override
+    public EMRShape clone() {
+        return new SignalArrow(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY(),targetPosX,targetPosY);
+    }
 }

@@ -79,4 +79,9 @@ public class InversionAccumulationShape extends EMRShape {
         gc.fillPolygon(xCoords,yCoords,xCoords.length);
         gc.strokePolygon(xCoords,yCoords,xCoords.length);
     }
+
+    @Override
+    public EMRShape clone() {
+        return new InversionAccumulationShape(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

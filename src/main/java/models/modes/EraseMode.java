@@ -18,9 +18,9 @@ public class EraseMode implements Mode {
     public void canvaClicked(double cursorPositionX, double cursorPositionY) {
         System.out.println("CLICKÉ ERASE");
         EMRShape clickedShape = ctrl.getCanva().getShapeOnCoordinate(cursorPositionX,cursorPositionY);
-        EraseEMRShapeCommand eraseShape = new EraseEMRShapeCommand( ctrl.getCanva(), clickedShape);
+        EraseEMRShapeCommand eraseShape = new EraseEMRShapeCommand( clickedShape);
         ctrl.getUndoCommands().add(eraseShape);
-        eraseShape.execute();
+        eraseShape.execute(ctrl.getCanva());
 
     }
 }
