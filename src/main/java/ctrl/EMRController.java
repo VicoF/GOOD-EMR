@@ -149,40 +149,7 @@ public class EMRController{
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
 
-        //Pour dessiner un flêche quand on drag
-        canva.setOnDragDetected(event -> {
-            System.out.println("ÇA DRAAAAAAAAAAAAAAAAAAAAGUE");
-            String value  = (String) arrowCombo.getValue();
-            if (value!=null){
-                if (value.equals("Signal arrow")){
-                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
-                    canva.startFullDrag();
-                }else if (value.equals("Power arrow")){
-                    draggedShape = EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW,EMRCategories.BLACK_ARROW, event.getX(), event.getY(), event.getX(), event.getY());
-                    canva.startFullDrag();
-                }
 
-            }
-
-        });
-
-        //Éditer la flêche pendant qu'on drag
-        canva.setOnMouseDragOver(event -> {
-            System.out.println("onDragOver");
-
-            // On retire la shape que l'on drag du canva
-            canva.eraseShape(draggedShape);
-            //On met à jour ses données
-
-            ((Arrow) draggedShape).setTargetPosX(event.getX());
-            ((Arrow) draggedShape).setTargetPosY(event.getY());
-
-            //On la remet dans le canva
-            canva.drawShape(draggedShape);
-
-
-            event.consume();
-        });
         //Dessiner les formes pendant qu'on drag
         canva.setOnDragOver(event -> {
             /* data is dragged over the target */
