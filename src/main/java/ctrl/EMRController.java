@@ -125,7 +125,7 @@ public class EMRController {
         currentCanva = energySourceCanva;
         s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
         s.draw(currentCanva.getGraphicsContext2D());
-        
+
         //Dessiner les formes pendant qu'on drag
         canva.setOnDragOver(event -> {
             /* data is dragged over the target */
