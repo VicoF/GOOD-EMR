@@ -31,9 +31,9 @@ public class DrawMode implements Mode {
                 ar.setPosY(firstShape.getPosY());
                 ar.setTargetPosX(clickedShape.getPosX());
                 ar.setTargetPosY(clickedShape.getPosY());
-                DrawEMRShapeCommand drawShape = new DrawEMRShapeCommand(ctrl.getCanva(),ar);
+                DrawEMRShapeCommand drawShape = new DrawEMRShapeCommand(ar);
                 ctrl.getUndoCommands().add(drawShape);
-                drawShape.execute();
+                drawShape.execute(ctrl.getCanva());
                 firstShape=null;
             }
         }

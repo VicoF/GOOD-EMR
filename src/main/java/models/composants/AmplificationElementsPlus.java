@@ -46,6 +46,9 @@ public class AmplificationElementsPlus extends EMRShape{
     }
 
 
-
+    @Override
+    public EMRShape clone() {
+        return new AmplificationElementsPlus(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 
 }

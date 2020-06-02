@@ -1,5 +1,6 @@
 package models.composants;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
@@ -92,4 +93,7 @@ public abstract class EMRShape implements Drawable{
     public void setPosY(double posY) {
         this.posY = posY;
     }
+
+    @Override
+    public abstract EMRShape clone();
 }

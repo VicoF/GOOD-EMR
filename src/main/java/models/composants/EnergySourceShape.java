@@ -51,4 +51,10 @@ public class EnergySourceShape extends EMRShape{
         label.setLayoutX(xCoords);
         label.setLayoutY(yCoords);
     }
+
+
+    @Override
+    public EMRShape clone() {
+        return new EnergySourceShape(getCategorie(),getDimensionA(),getThicknessB(),getPoliceSizeC(),getPosX(),getPosY());
+    }
 }

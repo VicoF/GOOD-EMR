@@ -4,21 +4,20 @@ import models.EMRCanvas;
 import models.composants.EMRShape;
 
 public class DrawEMRShapeCommand implements Command{
-    EMRCanvas canva;
+
     EMRShape drawShape;
 
-    public DrawEMRShapeCommand(EMRCanvas canva, EMRShape drawShape) {
-        this.canva = canva;
+    public DrawEMRShapeCommand(EMRShape drawShape) {
         this.drawShape = drawShape;
     }
 
     @Override
-    public void execute() {
+    public void execute(EMRCanvas canva) {
         canva.drawShape(drawShape);
     }
 
     @Override
-    public void undo() {
+    public void undo(EMRCanvas canva) {
         canva.eraseShape(drawShape);
     }
 }

@@ -1,6 +1,8 @@
 package models.modes;
 
 import ctrl.EMRController;
+import models.commands.EraseEMRShapeCommand;
+import models.commands.MoveEMRShapeCommand;
 import models.composants.EMRShape;
 
 public class MoveMode implements Mode {
@@ -17,11 +19,12 @@ public class MoveMode implements Mode {
         if(selectedShape ==null){
            selectedShape = ctrl.getCanva().getShapeOnCoordinate(cursorPositionX,cursorPositionY);
         }else{
-
-            ctrl.getCanva().eraseShape(selectedShape);
-            selectedShape.setPosX(cursorPositionX);
-            selectedShape.setPosY(cursorPositionY);
-            ctrl.getCanva().drawShape(selectedShape);
+            EMRShape newShape = selectedShape.clone();
+            newShape.setPosY(cursorPositionY);
+            newShape.setPosX(cursorPositionX);
+            MoveEMRShapeCommand cmd = new MoveEMRShapeCommand(selectedShape,newShape);
+            ctrl.getUndoCommands().add(cmd);
+            cmd.execute(ctrl.getCanva());
             selectedShape=null;
         }
     }
