@@ -9,11 +9,16 @@ import javafx.scene.layout.*;
 
 
 import models.EMRCanvas;
+import models.WriteBehavior;
+import models.WriteToTextFileBehavior;
 import models.composants.*;
 import models.modes.MoveMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
+
+import java.io.*;
+import java.util.ArrayList;
 
 
 public class EMRController {
@@ -261,8 +266,20 @@ public class EMRController {
             modeLabel.setText("Fermer la fenêtre");
         }else if(source.equals(menuOpen)){
             modeLabel.setText("Ouvrir un fichier sauvegardé");
+
+            try {
+                canva.load("C:/Users/julie/Desktop/WRITEDCANVA.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }else if(source.equals(menuSave)){
             modeLabel.setText("Sauvegarder le canva courant");
+            try {
+                canva.save("C:/Users/julie/Desktop/WRITEDCANVA.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else{
             modeLabel.setText("Option non pris en charge");
 

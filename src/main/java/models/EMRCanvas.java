@@ -3,13 +3,21 @@ package models;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import models.composants.EMRShape;
 
+import models.composants.EMRShape;
+import models.strategies.EMRCanvaToFileStrategy;
+import models.strategies.EMRCanvaToTxtFileStrategy;
+import models.strategies.FileToEMRCanvaStrategy;
+import models.strategies.TxtFileToEMRCanvaStrategy;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EMRCanvas extends Canvas {
 
     ArrayList<EMRShape> shapes;
+    EMRCanvaToFileStrategy writeStrategy = new EMRCanvaToTxtFileStrategy();
+    FileToEMRCanvaStrategy readStrategy = new TxtFileToEMRCanvaStrategy();
 
     public EMRCanvas() {
         shapes = new ArrayList<>();
@@ -51,6 +59,11 @@ public class EMRCanvas extends Canvas {
         return shapes;
     }
 
+    public void setShapes(ArrayList<EMRShape> shapes) {
+        this.shapes = shapes;
+        redrawCanva();
+    }
+
     public void clear(){
         shapes.clear();
         redrawCanva();
@@ -75,4 +88,15 @@ public class EMRCanvas extends Canvas {
         }
         return null; //Si aucune forme trouvée
     }
+
+    public void save(String path) throws IOException {
+        writeStrategy.write(path, this);
+    }
+
+    public void load(String path) throws IOException {
+
+        readStrategy.read(path, this);
+    }
+
+
 }

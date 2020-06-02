@@ -3,10 +3,13 @@ package models.composants;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+import javax.xml.parsers.DocumentBuilder;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EMRShape implements Drawable{
+public abstract class EMRShape implements Drawable, Serializable {
 
     private EMRCategories categorie;
     private double dimensionA =20;
@@ -41,6 +44,7 @@ public abstract class EMRShape implements Drawable{
         this.posX = posX;
         this.posY = posY;
     }
+
 
 
     public abstract boolean pointIsInsideShape(double coordX, double coordY);
@@ -91,5 +95,14 @@ public abstract class EMRShape implements Drawable{
 
     public void setPosY(double posY) {
         this.posY = posY;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass() +"{"+
+                "categorie=" + categorie +
+                ", posX=" + posX +
+                ", posY=" + posY +
+                '}';
     }
 }

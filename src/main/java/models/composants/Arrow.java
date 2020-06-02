@@ -66,4 +66,15 @@ public abstract class Arrow extends EMRShape {
         gc.strokeLine(x3,y3,x2,y2);
         gc.strokeLine(x4,y4,x2,y2);
     }
+
+    @Override
+    public String toString() {
+        return this.getClass()+"{" +
+                "categorie=" + getCategorie() +
+                ", posX=" + getPosX() +
+                ", posY=" + getPosY() +
+                ", targetPosX=" + targetPosX +
+                ", targetPosY=" + targetPosY +
+                '}';
+    }
 }
