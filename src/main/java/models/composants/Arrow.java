@@ -2,6 +2,12 @@ package models.composants;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Shape;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public abstract class Arrow extends EMRShape {
 
@@ -76,5 +82,12 @@ public abstract class Arrow extends EMRShape {
                 ", targetPosX=" + targetPosX +
                 ", targetPosY=" + targetPosY +
                 '}';
+    }
+
+    @Override
+    public String toXMLString()  {
+        String out = "<" + getClass().getName() + " categorie=\""+getCategorie()+ "\" posX=\"" + getPosX() + "\" posY=\"" +
+                getPosY()+"\" targetPosX=\""+targetPosX+ "\" targetPosY=\""+targetPosY+"\"/>";
+        return out;
     }
 }

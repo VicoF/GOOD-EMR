@@ -17,6 +17,8 @@ import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -268,7 +270,7 @@ public class EMRController {
             modeLabel.setText("Ouvrir un fichier sauvegardé");
 
             try {
-                canva.load("C:/Users/julie/Desktop/WRITEDCANVA.txt");
+                canva.load("C:/Users/julie/Desktop/WRITEDCANVA.xml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -276,8 +278,12 @@ public class EMRController {
         }else if(source.equals(menuSave)){
             modeLabel.setText("Sauvegarder le canva courant");
             try {
-                canva.save("C:/Users/julie/Desktop/WRITEDCANVA.txt");
+                canva.save("C:/Users/julie/Desktop/WRITEDCANVA.xml");
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
         }else{

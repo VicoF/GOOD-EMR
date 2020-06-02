@@ -5,19 +5,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import models.composants.EMRShape;
-import models.strategies.EMRCanvaToFileStrategy;
-import models.strategies.EMRCanvaToTxtFileStrategy;
-import models.strategies.FileToEMRCanvaStrategy;
-import models.strategies.TxtFileToEMRCanvaStrategy;
+import models.strategies.*;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class EMRCanvas extends Canvas {
 
     ArrayList<EMRShape> shapes;
-    EMRCanvaToFileStrategy writeStrategy = new EMRCanvaToTxtFileStrategy();
-    FileToEMRCanvaStrategy readStrategy = new TxtFileToEMRCanvaStrategy();
+    EMRCanvaToFileStrategy writeStrategy = new EMRCanvaToXMLFileStrategy();
+    FileToEMRCanvaStrategy readStrategy = new XMLFileToEMRCanvaStrategy();
 
     public EMRCanvas() {
         shapes = new ArrayList<>();
@@ -89,7 +88,7 @@ public class EMRCanvas extends Canvas {
         return null; //Si aucune forme trouvée
     }
 
-    public void save(String path) throws IOException {
+    public void save(String path) throws IOException, TransformerException, ParserConfigurationException {
         writeStrategy.write(path, this);
     }
 

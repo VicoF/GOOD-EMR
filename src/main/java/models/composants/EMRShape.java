@@ -1,15 +1,8 @@
 package models.composants;
 
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
+import models.strategies.XMLSerializable;
 
-import javax.xml.parsers.DocumentBuilder;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class EMRShape implements Drawable, Serializable {
+public abstract class EMRShape implements Drawable, XMLSerializable {
 
     private EMRCategories categorie;
     private double dimensionA =20;
@@ -104,5 +97,11 @@ public abstract class EMRShape implements Drawable, Serializable {
                 ", posX=" + posX +
                 ", posY=" + posY +
                 '}';
+    }
+
+    @Override
+    public String toXMLString() {
+        String out = "<" + getClass().getName() +" categorie=\""+getCategorie()+  "\" posX=\"" + getPosX() + "\" posY=\"" + getPosY()+"\"/>";
+        return out;
     }
 }
