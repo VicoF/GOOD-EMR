@@ -8,6 +8,8 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import models.EMRCanvas;
 import models.WriteBehavior;
 import models.WriteToTextFileBehavior;
@@ -16,6 +18,10 @@ import models.modes.MoveMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
+import models.strategies.EMRCanvaToTxtFileStrategy;
+import models.strategies.EMRCanvaToXMLFileStrategy;
+import models.strategies.TxtFileToEMRCanvaStrategy;
+import models.strategies.XMLFileToEMRCanvaStrategy;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -23,7 +29,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class EMRController {
+public class EMRController{
 
     @FXML
     EMRCanvas canva;
@@ -99,8 +105,18 @@ public class EMRController {
     MoveMode moveMode = new MoveMode(this);
     Mode mode = drawMode;
 
+    FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
+        //File chooser pour le save dialog
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Fichier texte", "*.txt");
+        FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("Fichier xml", "*.xml");
+        fileChooser.getExtensionFilters().addAll(txtFilter,xmlFilter);
+
+
+
         canva.widthProperty().bind(canvaParent.widthProperty());
         canva.heightProperty().bind(canvaParent.heightProperty());
 
@@ -270,7 +286,19 @@ public class EMRController {
             modeLabel.setText("Ouvrir un fichier sauvegardé");
 
             try {
-                canva.load("C:/Users/julie/Desktop/WRITEDCANVA.xml");
+                //Show save file dialog
+                File file = fileChooser.showOpenDialog(new Stage());
+                String fileName = file.getName();
+                if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+                    switch (fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase()){
+                        case "txt":
+                            canva.setReadStrategy(new TxtFileToEMRCanvaStrategy());
+                            break;
+                        case "xml":
+                            canva.setReadStrategy(new XMLFileToEMRCanvaStrategy());
+                            break;
+                    }
+                canva.load(file.getPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -278,7 +306,20 @@ public class EMRController {
         }else if(source.equals(menuSave)){
             modeLabel.setText("Sauvegarder le canva courant");
             try {
-                canva.save("C:/Users/julie/Desktop/WRITEDCANVA.xml");
+
+                //Show save file dialog
+                File file = fileChooser.showSaveDialog(new Stage());
+                String fileName = file.getName();
+                if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+                    switch (fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase()){
+                        case "txt":
+                            canva.setWriteStrategy(new EMRCanvaToTxtFileStrategy());
+                            break;
+                        case "xml":
+                            canva.setWriteStrategy(new EMRCanvaToXMLFileStrategy());
+                            break;
+                    }
+                canva.save(file.getPath());
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (TransformerException e) {

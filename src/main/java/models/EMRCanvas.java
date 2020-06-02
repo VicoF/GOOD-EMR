@@ -97,5 +97,12 @@ public class EMRCanvas extends Canvas {
         readStrategy.read(path, this);
     }
 
+    public void setWriteStrategy(EMRCanvaToFileStrategy strategy){
+        this.writeStrategy=strategy;
 
+    }
+
+    public void setReadStrategy(FileToEMRCanvaStrategy readStrategy) {
+        this.readStrategy = readStrategy;
+    }
 }
