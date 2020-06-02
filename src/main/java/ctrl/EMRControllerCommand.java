@@ -1,46 +1,23 @@
 package ctrl;
 
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import models.composants.EMRShape;
 
+import java.io.IOException;
+
 public class EMRControllerCommand {
+    Stage window;
 
-    public enum TypesEvent {
-        DRAW, MOVE, ERASE
-    }
+    public void display() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/views/test.fxml"));
 
-    TypesEvent event;
-    EMRShape oldShape;
-    EMRShape newShape;
-
-    public EMRControllerCommand(TypesEvent event, EMRShape oldShape, EMRShape newShape) {
-        this.event = event;
-        this.oldShape = oldShape;
-        this.newShape = newShape;
-    }
-
-    public TypesEvent getEvent() {
-        return event;
-    }
-
-    public void setEvent(TypesEvent event) {
-        this.event = event;
-    }
-
-    public EMRShape getOldShape() {
-        return oldShape;
-    }
-
-    public void setOldShape(EMRShape oldShape) {
-        this.oldShape = oldShape;
-    }
-
-    public EMRShape getNewShape() {
-        return newShape;
-    }
-
-    public void setNewShape(EMRShape newShape) {
-        this.newShape = newShape;
+        window.setTitle("Hello World");
+        window.setScene(new Scene(root, 300, 275));
+        window.show();
     }
 
 

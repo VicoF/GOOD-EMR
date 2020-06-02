@@ -2,6 +2,9 @@ package ctrl;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -11,6 +14,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 
+import javafx.stage.Stage;
 import models.EMRCanvas;
 import models.commands.Command;
 import models.commands.DrawEMRShapeCommand;
@@ -20,8 +24,10 @@ import models.modes.MoveMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
+import models.window.SaveFileXmlTxtWindow;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -283,7 +289,6 @@ public class EMRController {
     }
 
 
-
     public void onMenuButtonClick(ActionEvent event){
         Object source = event.getSource();
 
@@ -295,6 +300,9 @@ public class EMRController {
         }else if(source.equals(menuOpen)){
             modeLabel.setText("Ouvrir un fichier sauvegardé");
         }else if(source.equals(menuSave)){
+            SaveFileXmlTxtWindow sac = new SaveFileXmlTxtWindow();
+            sac.display();
+            
             modeLabel.setText("Sauvegarder le canva courant");
         }else{
             modeLabel.setText("Option non pris en charge");
@@ -325,4 +333,5 @@ public class EMRController {
     public Stack<EMRShape> getUndoShape(){return undoShape;}
 
     public Stack<String> getWtd() {return wtd;}
+
 }
