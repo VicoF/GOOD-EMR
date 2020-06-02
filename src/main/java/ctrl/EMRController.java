@@ -4,16 +4,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 
 import models.EMRCanvas;
+import models.commands.Command;
+import models.commands.DrawEMRShapeCommand;
+import models.commands.EraseEMRShapeCommand;
 import models.composants.*;
 import models.modes.MoveMode;
 import models.modes.DrawMode;
 import models.modes.EraseMode;
 import models.modes.Mode;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class EMRController {
@@ -84,6 +94,11 @@ public class EMRController {
     @FXML
     Label modeLabel;
 
+    @FXML
+    Button undoButton;
+
+    @FXML
+    Button redoButton;
 
 
     EMRShape draggedShape = null;
@@ -91,6 +106,10 @@ public class EMRController {
     EraseMode eraseMode = new EraseMode(this);
     MoveMode moveMode = new MoveMode(this);
     Mode mode = drawMode;
+    Stack<Command> undoCommands = new Stack<>();
+    Stack<Command> redoCommands = new Stack<>();
+    Stack<EMRShape> undoShape = new Stack<>();
+    Stack<String> wtd = new Stack<>();
 
 
     public void initialize() {
@@ -178,9 +197,13 @@ public class EMRController {
         });
 
         //Remise à zero de la shape dragged
-        canva.setOnDragDropped(event -> draggedShape = null);
+        canva.setOnDragDropped(event -> {//Command cmd = new DrawEMRShapeCommand(canva,draggedShape);
+            wtd.add("Drag");
+            draggedShape = null;});
 
     }
+
+
 
     @FXML
     public void onMenuCanvaDragged(MouseEvent event) {
@@ -228,6 +251,16 @@ public class EMRController {
         } else if (event.getSource().equals(moveButton)) {
             mode = moveMode;
             modeLabel.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
+        }else if (event.getSource().equals(undoButton)) {
+
+            redoCommands.add(undoCommands.peek());
+            undoCommands.pop().undo();
+            modeLabel.setText("undoMode");
+
+        }
+        else if (event.getSource().equals(redoButton)) {
+            redoCommands.pop().execute();
+            modeLabel.setText("redoMode");
         }
     }
 
@@ -265,7 +298,6 @@ public class EMRController {
             modeLabel.setText("Sauvegarder le canva courant");
         }else{
             modeLabel.setText("Option non pris en charge");
-
         }
 
     }
@@ -285,4 +317,12 @@ public class EMRController {
     public EMRCanvas getCanva() {
         return canva;
     }
+
+    public Stack<Command> getUndoCommands(){return undoCommands;}
+
+    public Stack<Command> getRedoCommands(){return redoCommands;}
+
+    public Stack<EMRShape> getUndoShape(){return undoShape;}
+
+    public Stack<String> getWtd() {return wtd;}
 }

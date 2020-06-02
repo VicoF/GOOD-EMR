@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import models.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<BorderPane focusTraversable="true" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.EMRController">
+<BorderPane focusTraversable="true" prefHeight="465.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.EMRController">
     <top>
         <VBox prefHeight="91.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -16,14 +16,14 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                        <MenuItem mnemonicParsing="false" text="Save" fx:id="menuSave" onAction="#onMenuButtonClick"/>
-                        <MenuItem mnemonicParsing="false" text="Open" fx:id="menuOpen" onAction="#onMenuButtonClick"/>
-                                <MenuItem mnemonicParsing="false" text="Close" fx:id="menuClose" onAction="#onMenuButtonClick"/>
+                        <MenuItem fx:id="menuSave" mnemonicParsing="false" onAction="#onMenuButtonClick" text="Save" />
+                        <MenuItem fx:id="menuOpen" mnemonicParsing="false" onAction="#onMenuButtonClick" text="Open" />
+                                <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#onMenuButtonClick" text="Close" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Clear All" fx:id="menuClearAll" onAction="#onMenuButtonClick"/>
+                                <MenuItem fx:id="menuClearAll" mnemonicParsing="false" onAction="#onMenuButtonClick" text="Clear All" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="More...">
@@ -54,9 +54,9 @@
                                         </items>
                                         </ComboBox>
                                         <Button layoutX="413.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="Button" />
-                                        <Label layoutX="460.0" layoutY="10.0" text="Aligment :" />
-                                        <Button layoutX="523.0" layoutY="6.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="29.0" text="Button" />
-                                        <Button layoutX="558.0" layoutY="6.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="27.0" text="Button" />
+                                        <Label layoutX="460.0" layoutY="10.0" text="Action :" />
+                                        <Button layoutX="523.0" layoutY="6.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="49.0" text="Undo" fx:id="undoButton" onAction="#onToolBarButtonClicked"/>
+                                        <Button layoutX="558.0" layoutY="6.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="46.0" text="Redo" fx:id="redoButton" onAction="#onToolBarButtonClicked"/>
                                         <Label layoutX="601.0" layoutY="6.0" />
                                         <Label layoutX="601.0" layoutY="10.0" text="Inversion :" />
                                         <Button layoutX="668.0" layoutY="6.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" text="Button" />
@@ -83,7 +83,7 @@
             <panes>
                 <TitledPane animated="false" text="Energy-based models">
                     <content>
-                  <FlowPane fx:id="energyBasedPane" >
+                  <FlowPane fx:id="energyBasedPane">
                         <children>
                             <Canvas fx:id="conversionCircleCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />
                             <Canvas fx:id="conversionSquareCanva" height="200.0" onDragDetected="#onMenuCanvaDragged" width="200.0" />

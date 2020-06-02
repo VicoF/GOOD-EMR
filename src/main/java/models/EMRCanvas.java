@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class EMRCanvas extends Canvas {
 
     ArrayList<EMRShape> shapes;
-
     public EMRCanvas() {
         shapes = new ArrayList<>();
         // Redraw canvas when size changes.
@@ -75,4 +74,5 @@ public class EMRCanvas extends Canvas {
         }
         return null; //Si aucune forme trouvée
     }
+
 }

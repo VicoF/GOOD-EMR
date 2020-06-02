@@ -2,6 +2,8 @@ package models.modes;
 
 import ctrl.EMRController;
 import models.EMRCanvas;
+import models.commands.Command;
+import models.commands.DrawEMRShapeCommand;
 import models.composants.Arrow;
 import models.composants.EMRCategories;
 import models.composants.EMRShape;
@@ -29,7 +31,9 @@ public class DrawMode implements Mode {
                 ar.setPosY(firstShape.getPosY());
                 ar.setTargetPosX(clickedShape.getPosX());
                 ar.setTargetPosY(clickedShape.getPosY());
-                ctrl.getCanva().drawShape(ar);
+                DrawEMRShapeCommand drawShape = new DrawEMRShapeCommand(ctrl.getCanva(),ar);
+                ctrl.getUndoCommands().add(drawShape);
+                drawShape.execute();
                 firstShape=null;
             }
         }

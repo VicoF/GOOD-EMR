@@ -17,6 +17,7 @@ public class MoveMode implements Mode {
         if(selectedShape ==null){
            selectedShape = ctrl.getCanva().getShapeOnCoordinate(cursorPositionX,cursorPositionY);
         }else{
+
             ctrl.getCanva().eraseShape(selectedShape);
             selectedShape.setPosX(cursorPositionX);
             selectedShape.setPosY(cursorPositionY);

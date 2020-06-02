@@ -2,6 +2,7 @@ package models.modes;
 
 
 import ctrl.EMRController;
+import models.commands.EraseEMRShapeCommand;
 import models.composants.Arrow;
 import models.composants.EMRShape;
 
@@ -17,6 +18,9 @@ public class EraseMode implements Mode {
     public void canvaClicked(double cursorPositionX, double cursorPositionY) {
         System.out.println("CLICKÉ ERASE");
         EMRShape clickedShape = ctrl.getCanva().getShapeOnCoordinate(cursorPositionX,cursorPositionY);
-        ctrl.getCanva().eraseShape(clickedShape);
+        EraseEMRShapeCommand eraseShape = new EraseEMRShapeCommand( ctrl.getCanva(), clickedShape);
+        ctrl.getUndoCommands().add(eraseShape);
+        eraseShape.execute();
+
     }
 }
