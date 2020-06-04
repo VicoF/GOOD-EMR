@@ -7,6 +7,6 @@ public interface Mode {
 
 
 
-    public void canvaClicked(double cursorPositionX, double cursorPositionY);
-   // public void composantGlisse(EMRShape shape);
+     void canvaClicked(double cursorPositionX, double cursorPositionY);
+   //  void composantGlisse(EMRShape shape);
 }

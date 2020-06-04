@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.EMRCanvas;
@@ -28,292 +27,292 @@ import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 
+public class EMRController {
 
-public class EMRController{
+	@FXML
+	EMRCanvas canva;
+	@FXML
+	Pane canvaParent;
 
-    @FXML
-    EMRCanvas canva;
-    @FXML
-    Pane canvaParent;
+	@FXML
+	Accordion accordion;
 
-    @FXML
-    Accordion accordion;
+	@FXML
+	MenuItem menuSave;
+	@FXML
+	MenuItem menuOpen;
+	@FXML
+	MenuItem menuClose;
+	@FXML
+	MenuItem menuClearAll;
 
-    @FXML
-    MenuItem menuSave;
-    @FXML
-    MenuItem menuOpen;
-    @FXML
-    MenuItem menuClose;
-    @FXML
-    MenuItem menuClearAll;
+	@FXML
+	ComboBox arrowCombo;
 
-    @FXML
-    ComboBox arrowCombo;
+	@FXML
+	FlowPane energyBasedPane;
+	@FXML
+	FlowPane inversionBasedPane;
+	@FXML
+	FlowPane strategyBasedPane;
+	@FXML
+	FlowPane estimatorBasedPane;
 
-    @FXML
-    FlowPane energyBasedPane;
-    @FXML
-    FlowPane inversionBasedPane;
-    @FXML
-    FlowPane strategyBasedPane;
-    @FXML
-    FlowPane estimatorBasedPane;
+	@FXML
+	Canvas inversionAccumulationCanva;
+	@FXML
+	Canvas inversionCouplingCanva;
+	@FXML
+	Canvas inversionConversionCanva;
 
-    @FXML
-    Canvas inversionAccumulationCanva;
-    @FXML
-    Canvas inversionCouplingCanva;
-    @FXML
-    Canvas inversionConversionCanva;
+	@FXML
+	Canvas conversionSquareCanva;
 
-    @FXML
-    Canvas conversionSquareCanva;
+	@FXML
+	Canvas conversionCircleCanva;
 
-    @FXML
-    Canvas conversionCircleCanva;
+	@FXML
+	Canvas conversionCouplingCircleCanva;
 
-    @FXML
-    Canvas conversionCouplingCircleCanva;
+	@FXML
+	Canvas conversionCouplingSquareCanva;
 
-    @FXML
-    Canvas conversionCouplingSquareCanva;
+	@FXML
+	Canvas energySourceCanva;
 
-    @FXML
-    Canvas energySourceCanva;
+	@FXML
+	BorderPane pane;
 
-    @FXML
-    BorderPane pane;
+	@FXML
+	Button drawButton;
 
-    @FXML
-    Button drawButton;
+	@FXML
+	Button eraseButton;
 
-    @FXML
-    Button eraseButton;
+	@FXML
+	Button moveButton;
 
-    @FXML
-    Button moveButton;
+	@FXML
+	Label modeLabel;
 
-    @FXML
-    Label modeLabel;
+	EMRShape draggedShape = null;
+	DrawMode drawMode = new DrawMode(this);
+	EraseMode eraseMode = new EraseMode(this);
+	MoveMode moveMode = new MoveMode(this);
+	Mode mode = drawMode;
 
+	FileChooser fileChooser = new FileChooser();
 
+	public void initialize() {
+		// File chooser pour le save dialog
 
-    EMRShape draggedShape = null;
-    DrawMode drawMode = new DrawMode(this);
-    EraseMode eraseMode = new EraseMode(this);
-    MoveMode moveMode = new MoveMode(this);
-    Mode mode = drawMode;
+		// Set extension filter for text files
+		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Fichier texte", "*.txt");
+		FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("Fichier xml", "*.xml");
+		fileChooser.getExtensionFilters().addAll(txtFilter, xmlFilter);
 
-    FileChooser fileChooser = new FileChooser();
+		canva.widthProperty().bind(canvaParent.widthProperty());
+		canva.heightProperty().bind(canvaParent.heightProperty());
 
-    public void initialize() {
-        //File chooser pour le save dialog
+		Canvas currentCanva = inversionAccumulationCanva;
+		EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION,
+				EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2),
+				(int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = inversionConversionCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION,
+				EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2),
+				(int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = inversionCouplingCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING,
+				EMRCategories.INVERSION_BASED, (int) (currentCanva.getWidth() / 2),
+				(int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = conversionCircleCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE,
+				EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = conversionSquareCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE,
+				EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = conversionCouplingSquareCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE,
+				EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = conversionCouplingCircleCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE,
+				EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
+		currentCanva = energySourceCanva;
+		s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE,
+				(int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
+		s.draw(currentCanva.getGraphicsContext2D());
 
-        //Set extension filter for text files
-        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Fichier texte", "*.txt");
-        FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("Fichier xml", "*.xml");
-        fileChooser.getExtensionFilters().addAll(txtFilter,xmlFilter);
+		// Dessiner les formes pendant qu'on drag
+		canva.setOnDragOver(event -> {
+			/* data is dragged over the target */
+			System.out.println("onDragOver");
 
+			// On retire la shape que l'on drag du canva
+			canva.eraseShape(draggedShape);
+			// On met à jour ses données
+			draggedShape.setPosX(event.getX());
+			draggedShape.setPosY(event.getY());
+			// On la remet dans le canva
+			canva.drawShape(draggedShape);
 
+			event.consume();
+		});
 
-        canva.widthProperty().bind(canvaParent.widthProperty());
-        canva.heightProperty().bind(canvaParent.heightProperty());
+		// Remise à zero de la shape dragged
+		canva.setOnDragDropped(event -> draggedShape = null);
 
+	}
 
-        Canvas currentCanva = inversionAccumulationCanva;
-        EMRShape s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED,
-                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = inversionConversionCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED,
-                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = inversionCouplingCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED,
-                (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = conversionCircleCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = conversionSquareCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = conversionCouplingSquareCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = conversionCouplingCircleCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, EMRCategories.ENERGY_BASED, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
-        currentCanva = energySourceCanva;
-        s = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, (int) (currentCanva.getWidth() / 2), (int) (currentCanva.getHeight() / 2));
-        s.draw(currentCanva.getGraphicsContext2D());
+	@FXML
+	public void onMenuCanvaDragged(MouseEvent event) {
+		/* drag was detected, start drag-and-drop gesture */
+		System.out.println("onDragDetected");
 
+		/* allow any transfer mode */
+		Dragboard db = inversionCouplingCanva.startDragAndDrop(TransferMode.ANY);
+		ClipboardContent content = new ClipboardContent();
+		content.putString("Allo");
+		db.setContent(content);
 
-        //Dessiner les formes pendant qu'on drag
-        canva.setOnDragOver(event -> {
-            /* data is dragged over the target */
-            System.out.println("onDragOver");
+		if (event.getSource().equals(inversionCouplingCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING,
+					EMRCategories.INVERSION_BASED, 0, 0);
+		} else if (event.getSource().equals(inversionAccumulationCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION,
+					EMRCategories.INVERSION_BASED, 0, 0);
+		} else if (event.getSource().equals(inversionConversionCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION,
+					EMRCategories.INVERSION_BASED, 0, 0);
+		} else if (event.getSource().equals(conversionSquareCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE,
+					EMRCategories.ENERGY_BASED, 0, 0);
+		} else if (event.getSource().equals(conversionCircleCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE,
+					EMRCategories.ENERGY_BASED, 0, 0);
+		} else if (event.getSource().equals(conversionCouplingSquareCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(
+					EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE, EMRCategories.ENERGY_BASED,
+					0, 0);
+		} else if (event.getSource().equals(conversionCouplingCircleCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(
+					EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, EMRCategories.ENERGY_BASED,
+					0, 0);
+		} else if (event.getSource().equals(energySourceCanva)) {
+			draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE,
+					EMRCategories.ENERGY_SOURCE, 0, 0);
+		}
 
-            // On retire la shape que l'on drag du canva
-            canva.eraseShape(draggedShape);
-            //On met à jour ses données
-            draggedShape.setPosX(event.getX());
-            draggedShape.setPosY(event.getY());
-            //On la remet dans le canva
-            canva.drawShape(draggedShape);
+		event.consume();
+	}
 
+	@FXML
+	public void onToolBarButtonClicked(ActionEvent event) {
+		modeLabel.setText("Bouton cliqué");
+		if (event.getSource().equals(drawButton)) {
+			mode = drawMode;
+			modeLabel.setText("Outil de dessin selectionne, glissez sur le canva pour dessiner une fleche");
+		} else if (event.getSource().equals(eraseButton)) {
+			mode = eraseMode;
+			modeLabel.setText("Outil efface selectionne, appuyez sur une forme pour l'effacer");
+		} else if (event.getSource().equals(moveButton)) {
+			mode = moveMode;
+			modeLabel
+					.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
+		}
+	}
 
-            event.consume();
-        });
+	@FXML
+	public void onCanvaClicked(MouseEvent event) {
+		mode.canvaClicked(event.getX(), event.getY());
+	}
 
-        //Remise à zero de la shape dragged
-        canva.setOnDragDropped(event -> draggedShape = null);
+	public void onMenuButtonClick(ActionEvent event) {
+		Object source = event.getSource();
 
-    }
+		if (source.equals(menuClearAll)) {
+			modeLabel.setText("Clear");
+			canva.clear();
+		} else if (source.equals(menuClose)) {
+			modeLabel.setText("Fermer la fenêtre");
+		} else if (source.equals(menuOpen)) {
+			modeLabel.setText("Ouvrir un fichier sauvegardé");
 
-    @FXML
-    public void onMenuCanvaDragged(MouseEvent event) {
-        /* drag was detected, start drag-and-drop gesture*/
-        System.out.println("onDragDetected");
+			try {
+				// Show save file dialog
+				File file = fileChooser.showOpenDialog(new Stage());
+				if(file!=null) {
+				String fileName = file.getName();
+				if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+					switch (fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase()) {
+					case "txt":
+						canva.setReadStrategy(new TxtFileToEMRCanvaStrategy());
+						break;
+					case "xml":
+						canva.setReadStrategy(new XMLFileToEMRCanvaStrategy());
+						break;
+					}
+				canva.load(file.getPath());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-        /* allow any transfer mode */
-        Dragboard db = inversionCouplingCanva.startDragAndDrop(TransferMode.ANY);
-        ClipboardContent content = new ClipboardContent();
-        content.putString("Allo");
-        db.setContent(content);
+		} else if (source.equals(menuSave)) {
+			modeLabel.setText("Sauvegarder le canva courant");
+			try {
 
-        if (event.getSource().equals(inversionCouplingCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_COUPLING, EMRCategories.INVERSION_BASED, 0, 0);
-        } else if (event.getSource().equals(inversionAccumulationCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_ACCUMULATION, EMRCategories.INVERSION_BASED, 0, 0);
-        } else if (event.getSource().equals(inversionConversionCanva)) {
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.INVERSION_CONVERSION, EMRCategories.INVERSION_BASED, 0, 0);
-        }else if (event.getSource().equals(conversionSquareCanva)){
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_SQUARE, EMRCategories.ENERGY_BASED, 0, 0);
-        }else if (event.getSource().equals(conversionCircleCanva)){
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_CIRCLE, EMRCategories.ENERGY_BASED, 0, 0);
-        }else if (event.getSource().equals(conversionCouplingSquareCanva)){
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_SQUARE, EMRCategories.ENERGY_BASED, 0, 0);
-        }else if (event.getSource().equals(conversionCouplingCircleCanva)){
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_BASED_CONVERSION_COUPLING_CIRCLE, EMRCategories.ENERGY_BASED, 0, 0);
-        }else if (event.getSource().equals(energySourceCanva)){
-            draggedShape = EMRShapeFactory.getComposant(EMRShapeFactory.ComposantType.ENERGY_SOURCE_SHAPE, EMRCategories.ENERGY_SOURCE, 0, 0);
-        }
+				// Show save file dialog
+				File file = fileChooser.showSaveDialog(new Stage());
+				if (file != null) {
+					String fileName = file.getName();
+					if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+						switch (fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase()) {
+						case "txt":
+							canva.setWriteStrategy(new EMRCanvaToTxtFileStrategy());
+							break;
+						case "xml":
+							canva.setWriteStrategy(new EMRCanvaToXMLFileStrategy());
+							break;
+						}
+					canva.save(file.getPath());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			}
+		} else {
+			modeLabel.setText("Option non pris en charge");
 
+		}
 
-        event.consume();
-    }
+	}
 
+	public Arrow getSelectedArrow() {
+		String value = (String) arrowCombo.getValue();
+		if (value != null) {
+			if (value.equals("Signal arrow")) {
+				return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW, EMRCategories.RED_ARROW, 0, 0,
+						0, 0);
+			} else if (value.equals("Power arrow")) {
+				return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW, EMRCategories.BLACK_ARROW, 0, 0,
+						0, 0);
+			}
+		}
+		return null;
+	}
 
-    @FXML
-    public void onToolBarButtonClicked(ActionEvent event) {
-        modeLabel.setText("Bouton cliqué");
-        if (event.getSource().equals(drawButton)) {
-            mode = drawMode;
-            modeLabel.setText("Outil de dessin selectionne, glissez sur le canva pour dessiner une fleche");
-        } else if (event.getSource().equals(eraseButton)) {
-            mode = eraseMode;
-            modeLabel.setText("Outil efface selectionne, appuyez sur une forme pour l'effacer");
-        } else if (event.getSource().equals(moveButton)) {
-            mode = moveMode;
-            modeLabel.setText("Outil de glissement selectionne, glissez sur le canva pour dessiner deplacer les formes");
-        }
-    }
-
-    @FXML
-    public void onCanvaClicked(MouseEvent event) {
-      /*  switch (event.getButton()) {
-            case PRIMARY:
-                canva.drawShape(new SignalArrow(EMRCategories.RED_ARROW, event.getX(), event.getY(), event.getX()-10,event.getY()+20));
-                break;
-            case SECONDARY:
-                canva.drawShape(new InversionAccumulationShape(EMRCategories.INVERSION_BASED, event.getX(), event.getY()));
-                break;
-            case MIDDLE:
-                canva.drawShape(new InversionConversionShape(EMRCategories.INVERSION_BASED, event.getX(), event.getY()));
-                break;
-        }
-*/
-
-        mode.canvaClicked(event.getX(),event.getY());
-    }
-
-
-
-    public void onMenuButtonClick(ActionEvent event){
-        Object source = event.getSource();
-
-        if (source.equals(menuClearAll)){
-                modeLabel.setText("Clear");
-                canva.clear();
-        }else if (source.equals(menuClose)){
-            modeLabel.setText("Fermer la fenêtre");
-        }else if(source.equals(menuOpen)){
-            modeLabel.setText("Ouvrir un fichier sauvegardé");
-
-            try {
-                //Show save file dialog
-                File file = fileChooser.showOpenDialog(new Stage());
-                String fileName = file.getName();
-                if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-                    switch (fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase()){
-                        case "txt":
-                            canva.setReadStrategy(new TxtFileToEMRCanvaStrategy());
-                            break;
-                        case "xml":
-                            canva.setReadStrategy(new XMLFileToEMRCanvaStrategy());
-                            break;
-                    }
-                canva.load(file.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }else if(source.equals(menuSave)){
-            modeLabel.setText("Sauvegarder le canva courant");
-            try {
-
-                //Show save file dialog
-                File file = fileChooser.showSaveDialog(new Stage());
-                String fileName = file.getName();
-                if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-                    switch (fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase()){
-                        case "txt":
-                            canva.setWriteStrategy(new EMRCanvaToTxtFileStrategy());
-                            break;
-                        case "xml":
-                            canva.setWriteStrategy(new EMRCanvaToXMLFileStrategy());
-                            break;
-                    }
-                canva.save(file.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-        }else{
-            modeLabel.setText("Option non pris en charge");
-
-        }
-
-    }
-
-    public Arrow getSelectedArrow(){
-        String value  = (String) arrowCombo.getValue();
-        if (value!=null){
-            if (value.equals("Signal arrow")){
-                return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.SIGNAL_ARROW,EMRCategories.RED_ARROW,0,0,0,0);
-            }else if (value.equals("Power arrow")){
-                return EMRShapeFactory.getArrow(EMRShapeFactory.ArrowType.POWER_ARROW,EMRCategories.BLACK_ARROW,0,0,0,0);
-            }
-        }
-        return null;
-    }
-
-    public EMRCanvas getCanva() {
-        return canva;
-    }
+	public EMRCanvas getCanva() {
+		return canva;
+	}
 }
