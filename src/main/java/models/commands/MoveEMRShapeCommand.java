@@ -3,7 +3,11 @@ package models.commands;
 import models.EMRCanvas;
 import models.composants.EMRCategories;
 import models.composants.EMRShape;
-
+/**
+ *  Cette classe implemente le design pattern "Command Pattern" avec DrawEMRShapeCommand, EraseEMRShapeCommand, MoveEMRShapeCommand
+ * @author Williams
+ *
+ */
 public class MoveEMRShapeCommand implements Command {
     EMRShape oldShape;
     EMRShape newShape;

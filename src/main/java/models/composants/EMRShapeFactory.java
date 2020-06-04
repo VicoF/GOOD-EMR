@@ -1,7 +1,9 @@
 package models.composants;
 
 /**
- * Factory permetant de générer des composants
+ * Cette classe impl�mente le design pattern "Factory Pattern" 
+ *
+ * @author Williams
  */
 public class EMRShapeFactory {
 
