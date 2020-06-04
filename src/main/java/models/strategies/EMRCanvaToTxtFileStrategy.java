@@ -7,7 +7,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
+/**
+ *  Cette classe implémente le design pattern "Strategy Pattern" avec les classes EMRCanvaToTxtFileStrategy et EMRCanvaToFileStrategy
+ * @author Victor
+ *
+ */
 public class EMRCanvaToTxtFileStrategy implements  EMRCanvaToFileStrategy {
     final String FILE_EXTENSION = ".txt";
     @Override

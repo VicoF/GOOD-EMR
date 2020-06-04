@@ -20,7 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ *  Cette classe implémente le design pattern "Strategy Pattern" avec les classes TxtFileToEMRCanvaStrategy et FileToEMRCanvaStrategy
+ * @author Victor
+ *
+ */
 public class XMLFileToEMRCanvaStrategy implements FileToEMRCanvaStrategy {
     @Override
     public void read(String path, EMRCanvas canva) throws IOException {

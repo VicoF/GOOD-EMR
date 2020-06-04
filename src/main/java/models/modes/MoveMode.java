@@ -2,7 +2,11 @@ package models.modes;
 
 import ctrl.EMRController;
 import models.composants.EMRShape;
-
+/**
+ *  Cette classe implémente le design pattern "State Pattern" avec les classes DrawMode, EraseMode et Mode
+ * @author Victor
+ *
+ */
 public class MoveMode implements Mode {
 
     EMRController ctrl;

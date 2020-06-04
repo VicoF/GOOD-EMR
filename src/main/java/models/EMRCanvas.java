@@ -11,7 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * Canva personnalisés pour le bien de l'application.
+ * Possède des formes et les méthodes requises pour les dessiner
+ * @author Victor
+ *
+ */
 public class EMRCanvas extends Canvas {
 
     ArrayList<EMRShape> shapes;

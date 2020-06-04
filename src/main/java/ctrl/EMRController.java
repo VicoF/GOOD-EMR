@@ -10,8 +10,6 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.EMRCanvas;
-import models.WriteBehavior;
-import models.WriteToTextFileBehavior;
 import models.composants.*;
 import models.modes.MoveMode;
 import models.modes.DrawMode;
@@ -27,6 +25,13 @@ import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Controleur de l'application, implémente le patron MVC avec la vue et le
+ * modèle
+ * 
+ * @author Victor
+ *
+ */
 public class EMRController {
 
 	@FXML
@@ -104,13 +109,13 @@ public class EMRController {
 	FileChooser fileChooser = new FileChooser();
 
 	public void initialize() {
-		// File chooser pour le save dialog
-
+		// Initialisation du file chooser pour le save dialog
 		// Set extension filter for text files
 		FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Fichier texte", "*.txt");
 		FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("Fichier xml", "*.xml");
 		fileChooser.getExtensionFilters().addAll(txtFilter, xmlFilter);
 
+		// Configuration de la vue
 		canva.widthProperty().bind(canvaParent.widthProperty());
 		canva.heightProperty().bind(canvaParent.heightProperty());
 
@@ -171,6 +176,11 @@ public class EMRController {
 
 	}
 
+	/**
+	 * Permet de dessiner les formes lorsqu'elles sont drag
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void onMenuCanvaDragged(MouseEvent event) {
 		/* drag was detected, start drag-and-drop gesture */
@@ -213,6 +223,11 @@ public class EMRController {
 		event.consume();
 	}
 
+	/**
+	 * Changement du mode quand on clique sur les boutons de la barre d'outil
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void onToolBarButtonClicked(ActionEvent event) {
 		modeLabel.setText("Bouton cliqué");
@@ -229,11 +244,21 @@ public class EMRController {
 		}
 	}
 
+	/**
+	 * Relais la gestion de l'évenement au mode courant
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void onCanvaClicked(MouseEvent event) {
 		mode.canvaClicked(event.getX(), event.getY());
 	}
 
+	/**
+	 * Gère les actions des boutons du menu
+	 * 
+	 * @param event
+	 */
 	public void onMenuButtonClick(ActionEvent event) {
 		Object source = event.getSource();
 
@@ -248,18 +273,18 @@ public class EMRController {
 			try {
 				// Show save file dialog
 				File file = fileChooser.showOpenDialog(new Stage());
-				if(file!=null) {
-				String fileName = file.getName();
-				if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-					switch (fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase()) {
-					case "txt":
-						canva.setReadStrategy(new TxtFileToEMRCanvaStrategy());
-						break;
-					case "xml":
-						canva.setReadStrategy(new XMLFileToEMRCanvaStrategy());
-						break;
-					}
-				canva.load(file.getPath());
+				if (file != null) {
+					String fileName = file.getName();
+					if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+						switch (fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase()) {
+						case "txt":
+							canva.setReadStrategy(new TxtFileToEMRCanvaStrategy());
+							break;
+						case "xml":
+							canva.setReadStrategy(new XMLFileToEMRCanvaStrategy());
+							break;
+						}
+					canva.load(file.getPath());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -298,6 +323,11 @@ public class EMRController {
 
 	}
 
+	/**
+	 * Retourne la bonne flêche selon celle qui est séléctionnée dans la combo box
+	 * 
+	 * @return
+	 */
 	public Arrow getSelectedArrow() {
 		String value = (String) arrowCombo.getValue();
 		if (value != null) {
