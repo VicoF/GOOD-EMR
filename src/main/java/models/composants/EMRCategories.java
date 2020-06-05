@@ -2,7 +2,11 @@ package models.composants;
 
 
 import javafx.scene.paint.Color;
-
+/**
+ * Définis les diverses catégories de formes et les couleurs qui leur sont associées
+ * @author Victor
+ *
+ */
 public enum EMRCategories {
 
     ENERGY_SOURCE( Color.rgb(152,251,152), Color.rgb(0,128,0)),
